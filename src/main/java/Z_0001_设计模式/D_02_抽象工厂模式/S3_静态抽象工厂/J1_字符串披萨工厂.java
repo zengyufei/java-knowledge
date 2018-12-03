@@ -7,7 +7,7 @@ import Z_utils.Console;
 public class J1_字符串披萨工厂 {
 
     public static I1_中国披萨 创建中国披萨(String 什么披萨) {
-        System.out.println(Console.getThisMethodName(什么披萨));
+        Console.getThisMethodName(什么披萨);
         I1_中国披萨 中国披萨 = null;
         try {
             中国披萨 = (I1_中国披萨) Class.forName(什么披萨).newInstance();
@@ -21,7 +21,7 @@ public class J1_字符串披萨工厂 {
     }
 
     public static I1_美国披萨 创建美国披萨(String 什么披萨)  {
-        System.out.println(Console.getThisMethodName(什么披萨));
+        Console.getThisMethodName(什么披萨);
         I1_美国披萨 美国披萨 = null;
         try {
             美国披萨 = (I1_美国披萨) Class.forName(什么披萨).newInstance();

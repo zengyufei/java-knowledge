@@ -5,12 +5,14 @@ import Z_utils.Console;
 
 public abstract class I1_中国披萨 implements I1_披萨接口 {
 
+    @Override
     public void 加水() {
-        System.out.println(Console.getThisMethodName(" 200 毫升。"));
+        Console.getThisMethodName("200 毫升。");
     }
 
+    @Override
     public void 加面粉() {
-        System.out.println(Console.getThisMethodName(" 400 克。"));
+        Console.getThisMethodName("400 克。");
     }
 
     public abstract void 加酱();
