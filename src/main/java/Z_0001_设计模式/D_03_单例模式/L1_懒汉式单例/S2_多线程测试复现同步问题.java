@@ -5,15 +5,7 @@ import Z_utils.Console;
 
 import java.util.concurrent.CountDownLatch;
 
-public class S4_测试同步懒汉式单例 {
-
-    private static void 正常测试() {
-        Console.getThisMethodFullName("开始。");
-        S3_同步懒汉式单例 s1 = S3_同步懒汉式单例.getInstance();
-        S3_同步懒汉式单例 s2 = S3_同步懒汉式单例.getInstance();
-        S3_同步懒汉式单例 s3 = new S3_同步懒汉式单例();
-        System.out.println((s1 == s2 && s2 != s3) ? "正常测试通过!" : "正常测试失败！");
-    }
+public class S2_多线程测试复现同步问题 {
 
     private static int currentValue = 0;
 
@@ -35,7 +27,7 @@ public class S4_测试同步懒汉式单例 {
             // 正常情况下单线程，指令重排不会影响最终对象
             // 多线程情况下，当t1 还是执行分配内存空间的指令是，t2 线程已经完成初始化了，就会有问题
             // 所以一个对象的 new，不是原子性的，会出现重排序的问题。
-            int hashCode = S3_同步懒汉式单例.getInstance().hashCode();
+            int hashCode = S1_非同步懒汉式单例.getInstance().hashCode();
             if (currentValue == 0) {
                 currentValue = hashCode;
             } else if (currentValue != hashCode) {
@@ -59,7 +51,6 @@ public class S4_测试同步懒汉式单例 {
     }
 
     public static void main(String[] args) {
-        正常测试();
         多线程测试();
     }
 
