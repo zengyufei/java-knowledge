@@ -1,4 +1,4 @@
-package Z_0002_多线程.T_02_等待与通知.S1_非等待通知;
+package Z_0002_多线程.T_002_等待与通知.S1_非等待通知;
 
 public class H1_线程B extends Thread {
 

@@ -1,4 +1,4 @@
-package Z_0002_多线程.T_02_等待与通知.S3_join线程;
+package Z_0002_多线程.T_002_等待与通知.S3_join线程;
 
 public class V1_线程C extends Thread {
 

@@ -1,4 +1,4 @@
-package Z_0002_多线程.T_02_等待与通知.S2_wait与notify;
+package Z_0002_多线程.T_002_等待与通知.S2_wait与notify;
 
 public class R1_线程A extends Thread {
 
