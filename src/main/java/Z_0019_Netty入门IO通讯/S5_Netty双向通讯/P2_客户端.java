@@ -1,4 +1,4 @@
-package Z_0019_Netty入门IO通讯.S5_Netty双向通讯.S4_NettyAPI入门练习;
+package Z_0019_Netty入门IO通讯.S5_Netty双向通讯;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
