@@ -22,7 +22,7 @@ public class K2_客户端API {
 
         // 还有 BIO 模型：OioSocketChannel
         Class<NioSocketChannel> NIO模型 = NioSocketChannel.class;
-        ChannelInitializer<NioSocketChannel> 处理读写子线程 = new ChannelInitializer<NioSocketChannel>() {
+        ChannelInitializer<NioSocketChannel> 处理读写子线程逻辑 = new ChannelInitializer<NioSocketChannel>() {
             @Override
             protected void initChannel(NioSocketChannel nioSocketChannel) {
                 System.out.println("子线程处理读写线程切换到本线程！");
@@ -38,7 +38,7 @@ public class K2_客户端API {
         启动器
                 .group(数据读写子线程组)
                 .channel(NIO模型)
-                .handler(处理读写子线程);
+                .handler(处理读写子线程逻辑);
 
         //失败重连逻辑(启动器, "127.0.0.1", 8001);
         失败重试重连逻辑(启动器, "127.0.0.1", 8001, MAX_RETRY);
