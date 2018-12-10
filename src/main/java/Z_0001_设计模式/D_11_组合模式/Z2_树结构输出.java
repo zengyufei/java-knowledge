@@ -1,4 +1,4 @@
-package Z_0001_设计模式.D_11_组合模式.S1_组合模式;
+package Z_0001_设计模式.D_11_组合模式;
 
 import java.util.Arrays;
 import java.util.Collections;
