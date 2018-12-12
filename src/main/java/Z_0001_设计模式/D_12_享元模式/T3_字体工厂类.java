@@ -1,4 +1,4 @@
-package Z_0001_设计模式.D_12_享元模式.S1_享元模式;
+package Z_0001_设计模式.D_12_享元模式;
 
 import cn.hutool.core.map.MapUtil;
 
