@@ -8,7 +8,7 @@ public interface F2_序列化接口 {
 
     F3_JSON序列化实现 默认实现 = new F3_JSON序列化实现();
 
-    int 获取算法类型();
+    byte 获取算法类型();
 
     byte[] 序列化(F1_抽象数据包 抽象数据包);
 

@@ -27,4 +27,10 @@ public class Console {
         System.out.println(tr);
     }
 
+    public static void getThisClassName() {
+        StackTraceElement stackTraceElement = new Exception().getStackTrace()[1];
+        String tr = StrUtil.subAfter(stackTraceElement.getClassName(), ".", true);
+        System.out.println(tr);
+    }
+
 }

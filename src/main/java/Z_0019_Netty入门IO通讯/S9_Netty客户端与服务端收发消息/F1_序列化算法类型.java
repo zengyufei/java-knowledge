@@ -9,10 +9,10 @@ public interface F1_序列化算法类型 {
     /**
      * JSON 算法类型
      */
-    int JSON = 1;
+    byte JSON = 1;
 
     /**
      * JDK 序列化算法类型
      */
-    int JDK = 2;
+    byte JDK = 2;
 }

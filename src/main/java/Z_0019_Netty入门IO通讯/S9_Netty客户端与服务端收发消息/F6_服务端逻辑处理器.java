@@ -20,12 +20,12 @@ public class F6_服务端逻辑处理器 extends ChannelInboundHandlerAdapter {
             F4_登录响应数据包 登录响应数据包 = new F4_登录响应数据包();
             if (valid(登录请求数据包)) {
                 F9_登录状态记录工具类.记录登录状态(ctx.channel());
-                System.out.println(登录请求数据包.真实姓名 + " 认证成功。");
-                登录响应数据包.状态 = "true";
+                System.out.println(登录请求数据包.姓名 + " 认证成功。");
+                登录响应数据包.代码 = "true";
                 登录响应数据包.是否成功 = "成功";
             } else {
-                System.out.println(登录请求数据包.真实姓名 + " 认证失败！");
-                登录响应数据包.状态 = "false";
+                System.out.println(登录请求数据包.姓名 + " 认证失败！");
+                登录响应数据包.代码 = "false";
                 登录响应数据包.是否成功 = "失败";
             }
             ByteBuf 编码后的响应数据包 = F5_编码.编码(ctx.alloc(), 登录响应数据包);

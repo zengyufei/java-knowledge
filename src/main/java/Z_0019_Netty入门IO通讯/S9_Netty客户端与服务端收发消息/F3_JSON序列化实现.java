@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 public class F3_JSON序列化实现 implements F2_序列化接口 {
 
     @Override
-    public int 获取算法类型() {
+    public byte 获取算法类型() {
         return F1_序列化算法类型.JSON;
     }
 

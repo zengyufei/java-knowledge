@@ -19,7 +19,7 @@ public class F6_客户端逻辑处理器 extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("连接上了，马上登录！");
         F4_登录请求数据包 登录请求数据包 = new F4_登录请求数据包();
-        登录请求数据包.真实姓名 = "管理员";
+        登录请求数据包.姓名 = "管理员";
         登录请求数据包.账号 = "admin";
         登录请求数据包.密码 = "admin1";
         ByteBuf 编码后的请求数据包 = F5_编码.编码(ctx.alloc(), 登录请求数据包);
@@ -31,9 +31,9 @@ public class F6_客户端逻辑处理器 extends ChannelInboundHandlerAdapter {
         ByteBuf 数据载体 = (ByteBuf) msg;
         F1_抽象数据包 解码后的数据包 = F5_解码.解码(数据载体);
         if (解码后的数据包 instanceof F4_登录响应数据包) {
-            String 状态 = ((F4_登录响应数据包) 解码后的数据包).状态;
+            String 代码 = ((F4_登录响应数据包) 解码后的数据包).代码;
             String 是否成功 = ((F4_登录响应数据包) 解码后的数据包).是否成功;
-            if (状态.equals("true")) {
+            if (是否成功.equals("true")) {
                 System.out.println("登录是否成功：[" + 是否成功 + "]");
                 // 登录成功后给服务器发送消息
                 F4_发送消息请求数据包 发送消息请求数据包 = new F4_发送消息请求数据包();
@@ -48,7 +48,7 @@ public class F6_客户端逻辑处理器 extends ChannelInboundHandlerAdapter {
                 // 因为密码错误，所以重新登录
                 System.out.println("因为密码错误，所以重新登录");
                 F4_登录请求数据包 登录请求数据包 = new F4_登录请求数据包();
-                登录请求数据包.真实姓名 = "管理员";
+                登录请求数据包.姓名 = "管理员";
                 登录请求数据包.账号 = "admin";
                 登录请求数据包.密码 = "admin";
                 ByteBuf 编码后的请求数据包 = F5_编码.编码(ctx.alloc(), 登录请求数据包);

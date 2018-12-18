@@ -1,21 +1,19 @@
-package Z_0019_Netty入门IO通讯.S9_Netty客户端与服务端收发消息;
+package Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V2_数据包;
 
 /**
  * 描述：
  * @author zengyufei
  */
-public class F4_登录请求数据包 extends F1_抽象数据包 {
+public class V3_登录请求数据包 extends V1_抽象数据包 {
 
-    String 账号;
-    String 密码;
-    String 姓名;
+    private String 账号;
+    private String 密码;
+    private String 姓名;
 
     @Override
-    Byte 指令() {
-        return F1_指令.登录请求;
+    public byte 指令() {
+        return V1_指令.LOGIN_REQUEST;
     }
-
-    // json 序列化需要 getter/setter
 
     public String get账号() {
         return 账号;
