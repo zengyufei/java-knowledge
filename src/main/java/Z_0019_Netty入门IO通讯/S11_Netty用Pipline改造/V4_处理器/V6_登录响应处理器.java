@@ -7,6 +7,8 @@ import cn.hutool.core.lang.Console;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+import java.util.Scanner;
+
 /**
  * 描述：
  * @author zengyufei
@@ -30,10 +32,11 @@ public class V6_登录响应处理器 extends SimpleChannelInboundHandler<V3_登
 
         String 是否成功 = 登录响应数据包.get是否成功();
         if ("true".equals(是否成功)) {
-            String 服务器你好 = "服务器你好";
-            Console.log("客户端发送一条消息： {}", 服务器你好);
+            Console.log("请输入要发给服务器的消息：");
+            Scanner 控制台 = new Scanner(System.in);
+            String 输入一行 = 控制台.nextLine();
             V3_发送消息请求数据包 发送消息请求数据包 = new V3_发送消息请求数据包();
-            发送消息请求数据包.set消息(服务器你好);
+            发送消息请求数据包.set消息(输入一行);
             ctx.channel().writeAndFlush(发送消息请求数据包);
         } else {
             Console.log("重新登录...");

@@ -2,6 +2,7 @@ package Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造;
 
 import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V4_处理器.V5_编码处理器;
 import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V4_处理器.V5_解码处理器;
+import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V4_处理器.V6_消息发送请求处理器;
 import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V4_处理器.V6_登录请求处理器;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -25,6 +26,7 @@ public class V7_服务端 {
             protected void initChannel(NioSocketChannel nioSocketChannel) {
                 nioSocketChannel.pipeline().addLast(new V5_解码处理器());
                 nioSocketChannel.pipeline().addLast(new V6_登录请求处理器());
+                nioSocketChannel.pipeline().addLast(new V6_消息发送请求处理器());
                 nioSocketChannel.pipeline().addLast(new V5_编码处理器());
             }
         };
