@@ -5,10 +5,6 @@ import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C1_序
 import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C2_数据包.C1_抽象数据包;
 import io.netty.buffer.ByteBuf;
 
-/**
- * 描述：
- * @author zengyufei
- */
 public class C4_编码 {
 
     public final static int 魔数 = 0x87654321;
