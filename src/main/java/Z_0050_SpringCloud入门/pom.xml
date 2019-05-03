@@ -3,34 +3,55 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.zyf.cloud</groupId>
+    <groupId>Z_0050_SpringCloud</groupId>
     <artifactId>parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>Z_0050_SpringCloud入门</name>
-    <description>Z_0050_SpringCloud入门</description>
+    <version>1.0</version>
+
+    <name>${project.groupId}-${project.artifactId}</name>
+    <description>${project.groupId}-${project.artifactId}</description>
+
     <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.2.RELEASE</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
 
     <properties>
         <java.version>1.8</java.version>
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
     </properties>
 
-    <modules>
-        <module>S1_服务注册与发现Eureka/E1_服务注册中心</module>
-        <module>S1_服务注册与发现Eureka/E2_服务提供方</module>
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
 
-        <module>S2_服务消费者Ribbon-lite/R1_服务注册中心_lite</module>
-        <module>S2_服务消费者Ribbon-lite/R2_服务提供方_lite</module>
-        <module>S2_服务消费者Ribbon-lite/R3_服务消费方_lite</module>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-        <module>S2_服务消费者Ribbon/R1_服务注册中心</module>
-        <module>S2_服务消费者Ribbon/R2_服务提供方A</module>
-        <module>S2_服务消费者Ribbon/R2_服务提供方B</module>
-        <module>S2_服务消费者Ribbon/R3_服务消费方</module>
 
-        <module>S3_服务消费者Feign-lite/F1_服务注册中心_lite</module>
-        <module>S3_服务消费者Feign-lite/F2_服务提供方_lite</module>
-        <module>S3_服务消费者Feign-lite/F3_服务消费方_lite</module>
-
-    </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

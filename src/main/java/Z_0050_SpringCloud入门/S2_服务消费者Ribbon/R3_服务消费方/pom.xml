@@ -3,23 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.2.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
+     <parent>
+        <groupId>Z_0050_SpringCloud</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0</version>
     </parent>
 
-    <groupId>com.zyf.cloud</groupId>
-    <artifactId>R3</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>S2_服务消费者Ribbon-R3_服务消费方</name>
-    <description>springCloud 服务消费者Ribbon</description>
+    <groupId>S2_ServerServiceRibbon</groupId>
+    <artifactId>R3_ServiceClient</artifactId>
 
-    <properties>
-        <java.version>1.8</java.version>
-        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
-    </properties>
+    <name>S2_服务消费者Ribbon-R3_服务消费方</name>
 
     <dependencies>
         <dependency>
@@ -39,34 +32,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-        </repository>
-    </repositories>
 
 </project>

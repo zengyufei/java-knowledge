@@ -9,15 +9,21 @@
         <version>1.0</version>
     </parent>
 
-    <groupId>S2_ServerServiceRibbon</groupId>
-    <artifactId>R1_ServerRegisterCenter</artifactId>
+    <groupId>S1_ServerRegisterAndFound</groupId>
+    <artifactId>E2_ServerRegisterClient</artifactId>
 
-    <name>S2_服务消费者Ribbon-R1_服务注册中心</name>
+    <name>S1_服务注册与发现Eureka-E2_服务接入方</name>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!-- 解决：Shutting down DiscoveryClient ... 解决程序启动后又自动停止的问题。-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
