@@ -1,7 +1,5 @@
 package com.zyf.cloud;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -17,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 //@EnableDiscoveryClient
 @EnableEurekaClient
 @SpringBootApplication
-public class S2_R3_服务消费方_lite_启动器 implements CommandLineRunner {
+public class S2_R3_服务消费方_lite_启动器 {
 
     /**
      * 给 RestTemplate 开外挂。开启均衡负载能力。
@@ -28,26 +26,9 @@ public class S2_R3_服务消费方_lite_启动器 implements CommandLineRunner {
         return new RestTemplate();
     }
 
-    @Autowired
-    RestTemplate restTemplate;
-
     public static void main(String[] args) {
         SpringApplication.run(S2_R3_服务消费方_lite_启动器.class, args);
     }
 
-    /**
-     * 启动 springboot 后调用的方法
-     */
-    @Override
-    public void run(String... args) throws Exception {
-        Thread.sleep(5000);
-        String[] urls = new String[]{"eureka-client-lite"};
-        for (String clientName : urls) {
-            Integer result = restTemplate.getForEntity("http://" + clientName + "/add?a=1&b=2", Integer.class).getBody();
-            System.out.println("=======================================");
-            System.out.println(clientName + " : " + result);
-            System.out.println("=======================================");
-        }
-    }
 }
 
