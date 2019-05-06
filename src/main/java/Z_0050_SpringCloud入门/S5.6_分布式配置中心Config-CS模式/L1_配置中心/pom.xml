@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>S5_SpringCloudConfigServer</groupId>
-    <artifactId>K2_ConfigServerCenterA</artifactId>
+    <artifactId>L1_ConfigServerCenter</artifactId>
 
     <name>S5_分布式配置中心Config-CS模式-L1_配置中心</name>
 
