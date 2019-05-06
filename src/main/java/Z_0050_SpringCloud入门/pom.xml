@@ -30,6 +30,8 @@
         <module>S5.3_分布式配置中心Config-Git</module>
         <module>S5.4_分布式配置中心Config-Location</module>
         <module>S5.5_分布式配置中心Config-JDBC</module>
+        <module>S5.6_分布式配置中心Config-CS模式</module>
+        <module>S5.7_分布式配置中心Config-高可用</module>
     </modules>
 
     <properties>

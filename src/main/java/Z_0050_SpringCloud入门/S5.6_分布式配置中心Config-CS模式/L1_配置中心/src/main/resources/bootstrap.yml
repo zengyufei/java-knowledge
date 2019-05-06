@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/zengyufei/PrivateSpringCloudConfig
+          search-paths: /
+
+server:
+  port: 15611

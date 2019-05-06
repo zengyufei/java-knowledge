@@ -1,0 +1,17 @@
+### Get request
+GET http://localhost:15611/config-client/dev/master
+
+### Get request
+GET http://localhost:15611/config-client-dev.yml
+
+### Get request
+GET http://localhost:15611/config-client.yml
+
+### Get request
+GET http://localhost:15621/info
+
+### Get request
+GET http://localhost:15621/actuator/info
+
+###
+

@@ -1,0 +1,8 @@
+### Get request
+GET http://localhost:15731/actuator/info
+
+### Get request
+GET http://localhost:15731/info
+
+###
+

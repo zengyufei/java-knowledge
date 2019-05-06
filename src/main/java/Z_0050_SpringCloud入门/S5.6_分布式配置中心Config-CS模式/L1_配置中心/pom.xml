@@ -10,14 +10,16 @@
         <relativePath />
     </parent>
 
-    <artifactId>S5.5-ConfigCenter-Location</artifactId>
+    <groupId>S5_SpringCloudConfigServer</groupId>
+    <artifactId>K2_ConfigServerCenterA</artifactId>
 
-    <name>${project.groupId}-${project.artifactId}</name>
+    <name>S5_分布式配置中心Config-CS模式-L1_配置中心</name>
 
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>V1_配置中心</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

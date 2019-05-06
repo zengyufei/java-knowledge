@@ -10,14 +10,15 @@
         <relativePath />
     </parent>
 
-    <artifactId>S5.5-ConfigCenter-Location</artifactId>
+    <artifactId>S5.6-ConfigCenter-HighUse</artifactId>
 
     <name>${project.groupId}-${project.artifactId}</name>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>V1_配置中心</module>
+        <module>L1_配置中心</module>
+        <module>L2_客户端</module>
     </modules>
 
 </project>

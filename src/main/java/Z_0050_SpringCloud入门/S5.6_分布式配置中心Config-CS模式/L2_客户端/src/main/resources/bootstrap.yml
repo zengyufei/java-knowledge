@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      uri: http://localhost:15611/
+      profile: default
+      label: master
+
+server:
+  port: 15621
