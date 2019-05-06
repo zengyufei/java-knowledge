@@ -1,0 +1,28 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: jdbc
+  application:
+    name: config-server-jdbc
+  cloud:
+    config:
+      server:
+        default-label: master
+        jdbc:
+          sql:  SELECT `KEY`, `VALUE` from PROPERTIES where APPLICATION=? and PROFILE=? and LABEL=?
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username:
+    password:
+    schema: classpath:db/init.sql
+    data: classpath:db/data.sql
+server:
+  port: 15511

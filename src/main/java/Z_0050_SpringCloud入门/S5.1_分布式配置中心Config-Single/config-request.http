@@ -1,0 +1,14 @@
+### Get request
+GET http://localhost:15111/config-client/dev/master
+Accept: application/json
+
+### Get request
+GET http://localhost:15111/config-client-dev.yml
+Accept: application/json
+
+### Get request
+GET http://localhost:15111/dev/config-client.yml
+Accept: application/json
+
+###
+

@@ -1,0 +1,20 @@
+### Get request
+GET http://localhost:15411/config-client/dev/master
+
+### Get request
+GET http://localhost:15412/config-client/dev/master
+
+### Get request
+GET http://localhost:15411/config-client-dev.yml
+
+### Get request
+GET http://localhost:15412/config-client-dev.yml
+
+### Get request
+GET http://localhost:15411/config-client.yml
+
+### Get request
+GET http://localhost:15412/config-client.yml
+
+###
+

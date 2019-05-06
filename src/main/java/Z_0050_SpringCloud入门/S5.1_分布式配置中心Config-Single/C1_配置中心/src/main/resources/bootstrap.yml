@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: config-server
+  # 读取本地配置，不使用 git 需要配置 native
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/config/
+        #git:
+        #    uri: http://git.oschina.net/didispace/config-repo-demo/
+server:
+  port: 15111

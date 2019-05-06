@@ -3,6 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.2.RELEASE</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+
     <groupId>Z_0050_SpringCloud</groupId>
     <artifactId>parent</artifactId>
     <version>1.0</version>
@@ -12,12 +19,18 @@
 
     <packaging>pom</packaging>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.2.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
-    </parent>
+    <modules>
+        <module>S1_服务注册与发现Eureka</module>
+        <module>S2_服务消费者Ribbon</module>
+        <module>S2_服务消费者Ribbon-lite</module>
+        <module>S3_服务消费者Feign-lite</module>
+        <module>S4_服务消费者Feign-UploadFile</module>
+        <module>S5.1_分布式配置中心Config-Single</module>
+        <module>S5.2_分布式配置中心Config-加密传输</module>
+        <module>S5.3_分布式配置中心Config-Git</module>
+        <module>S5.4_分布式配置中心Config-Location</module>
+        <module>S5.5_分布式配置中心Config-JDBC</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

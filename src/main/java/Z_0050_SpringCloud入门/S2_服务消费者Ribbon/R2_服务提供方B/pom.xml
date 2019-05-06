@@ -7,6 +7,7 @@
         <groupId>Z_0050_SpringCloud</groupId>
         <artifactId>parent</artifactId>
         <version>1.0</version>
+        <relativePath />
     </parent>
 
     <groupId>S2_ServerServiceRibbon</groupId>

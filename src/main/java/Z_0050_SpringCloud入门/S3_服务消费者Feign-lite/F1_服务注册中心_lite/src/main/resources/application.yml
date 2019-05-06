@@ -1,17 +1,17 @@
 spring:
-    application:
-        name: eureka-feign-server-lite
+  application:
+    name: eureka-feign-server-lite
 
 eureka:
-    client:
-        # 通过设置 fetch-registry 与 register-with-eureka 表明自己是一个eureka服务
-        fetch-registry: false   # 禁止注册自己，检索服务选项，当设置为 True(默认值) 时，会进行服务检索, 注册中心不负责检索服务。
-        register-with-eureka: false # 必须打开，禁止注册自己，服务注册中心也会将自己作为客户端来尝试注册自己, 为 true（默认）时自动生效
-        service-url:
-            # 是一个默认的注册中心地址。配置该选项后，可以在服务中心进行注册。
-            defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-    instance:
-        hostname: localhost
+  client:
+    # 通过设置 fetch-registry 与 register-with-eureka 表明自己是一个eureka服务
+    fetch-registry: false   # 禁止注册自己，检索服务选项，当设置为 True(默认值) 时，会进行服务检索, 注册中心不负责检索服务。
+    register-with-eureka: false # 必须打开，禁止注册自己，服务注册中心也会将自己作为客户端来尝试注册自己, 为 true（默认）时自动生效
+    service-url:
+      # 是一个默认的注册中心地址。配置该选项后，可以在服务中心进行注册。
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  instance:
+    hostname: localhost
 
 server:
-    port: 13111
+  port: 13111

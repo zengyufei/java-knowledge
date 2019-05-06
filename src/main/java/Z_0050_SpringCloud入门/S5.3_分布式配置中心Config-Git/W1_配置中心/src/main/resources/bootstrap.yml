@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/zengyufei/PrivateSpringCloudConfig
+          search-paths: /
+
+      #profiles:
+      #    active: subversion # 需要显示声明 active
+      #svn:
+      #    uri: http://ip:port/svn/PrivateSpringCloudConfig
+      #    username: username
+      #    password: password
+      #    default-label: dev
+server:
+  port: 15311

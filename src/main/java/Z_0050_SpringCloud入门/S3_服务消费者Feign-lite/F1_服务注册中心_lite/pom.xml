@@ -7,9 +7,10 @@
         <groupId>Z_0050_SpringCloud</groupId>
         <artifactId>parent</artifactId>
         <version>1.0</version>
+        <relativePath />
     </parent>
 
-    <groupId>F1_ServerServiceFeign-lite</groupId>
+    <groupId>S3_ServerServiceFeign-lite</groupId>
     <artifactId>F1_ServerRegisterCenterLite</artifactId>
 
     <name>S3_服务消费者Feign-F1_服务注册中心_lite</name>

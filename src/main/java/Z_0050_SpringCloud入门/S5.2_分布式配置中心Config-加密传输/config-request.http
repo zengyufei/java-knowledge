@@ -1,0 +1,20 @@
+### Get request
+GET http://localhost:15211/encrypt/status
+
+### Get request 请求公钥，只有非对称加密才有值
+GET http://localhost:15211/key
+
+### POST request
+POST http://localhost:15211/encrypt
+Content-Type: application/x-www-form-urlencoded
+
+id=999&value=content
+# key = didispace2
+
+### POST request
+POST http://localhost:15211/decrypt
+Content-Type: application/x-www-form-urlencoded
+
+b3b8b731d50564e5cd3f55bac1ffaa80278195919b2ff12bbd2ed8396fe5d1daf5872336eee178921fec45622dd97bfe
+
+###

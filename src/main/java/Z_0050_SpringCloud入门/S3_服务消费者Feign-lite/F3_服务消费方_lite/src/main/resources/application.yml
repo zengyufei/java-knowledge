@@ -1,14 +1,14 @@
 spring:
-    application:
-        name: eureka-feign-consumer-lite
+  application:
+    name: eureka-feign-consumer-lite
 
 eureka:
-    client:
-        service-url:
-            # 是一个默认的注册中心地址。配置该选项后，可以在服务中心进行注册。
-            defaultZone: http://${eureka.instance.hostname}:13111/eureka/
-    instance:
-        hostname: localhost
+  client:
+    service-url:
+      # 是一个默认的注册中心地址。配置该选项后，可以在服务中心进行注册。
+      defaultZone: http://${eureka.instance.hostname}:13111/eureka/
+  instance:
+    hostname: localhost
 
 server:
-    port: 13131
+  port: 13131

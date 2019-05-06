@@ -1,0 +1,1 @@
+http://blog.didispace.com/spring-cloud-learning/

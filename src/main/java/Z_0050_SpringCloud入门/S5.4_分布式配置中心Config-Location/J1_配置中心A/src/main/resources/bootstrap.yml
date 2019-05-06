@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native # 需要显示声明 active
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: file:///d:\java/
+server:
+  port: 15411

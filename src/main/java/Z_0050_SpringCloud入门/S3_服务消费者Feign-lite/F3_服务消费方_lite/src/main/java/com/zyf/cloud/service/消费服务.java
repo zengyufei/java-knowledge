@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * 描述：
  * @author zengyufei
  */
-@FeignClient("eureka-feign-client-lite")
+@FeignClient("eureka-feign-service-lite")
 public interface 消费服务 {
 
     @RequestMapping(value = "/add")
