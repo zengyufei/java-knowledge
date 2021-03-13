@@ -1,7 +1,5 @@
-package Z_0019_Netty入门IO通讯.S8_Netty实现登录;
+package Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议;
 
-import Z_0019_Netty入门IO通讯.S7_Netty简易通讯协议.B1_抽象数据包;
-import Z_0019_Netty入门IO通讯.S7_Netty简易通讯协议.B4_序列化接口;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 

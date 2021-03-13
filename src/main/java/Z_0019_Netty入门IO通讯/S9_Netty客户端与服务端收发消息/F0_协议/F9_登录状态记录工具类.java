@@ -1,4 +1,4 @@
-package Z_0019_Netty入门IO通讯.S9_Netty客户端与服务端收发消息;
+package Z_0019_Netty入门IO通讯.S9_Netty客户端与服务端收发消息.F0_协议;
 
 
 import cn.hutool.core.convert.Convert;
@@ -16,7 +16,8 @@ public class F9_登录状态记录工具类 {
     }
 
     public static boolean 是否登录(Channel channel) {
-        return Convert.toBool(channel.attr(AttributeKey.valueOf("login")).get(), false);
+        Object login = channel.attr(AttributeKey.valueOf("login")).get();
+        return Convert.toBool(login, false);
     }
 
 }

@@ -13,6 +13,7 @@ public class Q1_服务端输入逻辑处理器3 extends ChannelInboundHandlerAda
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         Console.getThisClassName();
+        System.out.println("-------------------------------------------");
         ctx.channel().writeAndFlush(msg);
     }
 }

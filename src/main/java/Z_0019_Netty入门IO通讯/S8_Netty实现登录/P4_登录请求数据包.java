@@ -1,6 +1,9 @@
 package Z_0019_Netty入门IO通讯.S8_Netty实现登录;
 
-public class P4_登录请求数据包 extends P3_抽象数据包{
+import Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议.P3_抽象数据包;
+import Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议.P3_指令类型;
+
+public class P4_登录请求数据包 extends P3_抽象数据包 {
 
     private String 用户名;
     private String 密码;

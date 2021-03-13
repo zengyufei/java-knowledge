@@ -1,4 +1,4 @@
-package Z_0019_Netty入门IO通讯.S9_Netty客户端与服务端收发消息;
+package Z_0019_Netty入门IO通讯.S9_Netty客户端与服务端收发消息.F0_协议;
 
 /**
  * 描述：
@@ -11,8 +11,8 @@ public abstract class F1_抽象数据包 {
     /**
      * 默认1为发请求，2为响应
      */
-    Byte 版本 = 1;
-
-    abstract Byte 指令();
+    public Byte 版本 = 1;
+    
+    public abstract Byte 指令();
 
 }

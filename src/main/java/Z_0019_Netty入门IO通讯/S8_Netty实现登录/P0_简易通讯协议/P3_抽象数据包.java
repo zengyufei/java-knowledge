@@ -1,4 +1,4 @@
-package Z_0019_Netty入门IO通讯.S8_Netty实现登录;
+package Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议;
 
 public abstract class P3_抽象数据包 {
 

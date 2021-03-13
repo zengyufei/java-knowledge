@@ -17,12 +17,12 @@ public class K2_客户端API {
     private static int MAX_RETRY = 5;
 
     public static void main(String[] args) {
-        NioEventLoopGroup 数据读写子线程组 = new NioEventLoopGroup();
+        NioEventLoopGroup 读写线程组 = new NioEventLoopGroup();
         Bootstrap 启动器 = new Bootstrap();
 
         // 还有 BIO 模型：OioSocketChannel
-        Class<NioSocketChannel> NIO模型 = NioSocketChannel.class;
-        ChannelInitializer<NioSocketChannel> 处理读写子线程逻辑 = new ChannelInitializer<NioSocketChannel>() {
+        Class<NioSocketChannel> 通道类型 = NioSocketChannel.class;
+        ChannelInitializer<NioSocketChannel> 处理逻辑 = new ChannelInitializer<NioSocketChannel>() {
             @Override
             protected void initChannel(NioSocketChannel nioSocketChannel) {
                 System.out.println("子线程处理读写线程切换到本线程！");
@@ -36,32 +36,19 @@ public class K2_客户端API {
         启动器.attr(AttributeKey.valueOf("给主线程设置值"), "你好，主线程");
 
         启动器
-                .group(数据读写子线程组)
-                .channel(NIO模型)
-                .handler(处理读写子线程逻辑);
+                .group(读写线程组)
+                .channel(通道类型)
+                .handler(处理逻辑);
 
-        //失败重连逻辑(启动器, "127.0.0.1", 8001);
-        失败重试重连逻辑(启动器, "127.0.0.1", 8001, MAX_RETRY);
+        //失败重连逻辑(启动器, "127.0.0.1", 8000);
+        失败重试重连逻辑(启动器, "127.0.0.1", 8000, MAX_RETRY, 2);
 
-    }
-
-    private static void 失败重连逻辑(Bootstrap 启动器, String host, int port) {
-        GenericFutureListener<Future<? super Void>> 连接服务器监听器 = 连接结果 -> {
-            if (连接结果.isSuccess()) {
-                System.out.println("连接成功！");
-            } else {
-                System.out.println("连接失败！");
-                // 重连
-                失败重连逻辑(启动器, host, port);
-            }
-        };
-        启动器.connect(host, port).addListener(连接服务器监听器);
     }
 
     /**
      * 指定重试次数的连接
      */
-    private static void 失败重试重连逻辑(Bootstrap 启动器, String host, int port, int retry) {
+    private static void 失败重试重连逻辑(Bootstrap 启动器, String host, int port, int retry, int delay) {
         GenericFutureListener<Future<? super Void>> 连接服务器监听器 = 连接结果 -> {
             EventLoopGroup group = 启动器.config().group();
             if (连接结果.isSuccess()) {
@@ -71,12 +58,12 @@ public class K2_客户端API {
                 group.shutdownGracefully();
             } else {
                 int order = MAX_RETRY - retry;
-                int delay = 1 << order;
                 System.err.println(new Date() + ": 连接失败，第" + ++order + "次重连……");
                 // 重连
-                group.schedule(() -> 失败重试重连逻辑(启动器, host, port, retry - 1), delay, TimeUnit.SECONDS);
+                group.schedule(() -> 失败重试重连逻辑(启动器, host, port, retry - 1, delay), delay, TimeUnit.SECONDS);
             }
         };
         启动器.connect(host, port).addListener(连接服务器监听器);
     }
+    
 }
