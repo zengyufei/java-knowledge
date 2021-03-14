@@ -30,7 +30,7 @@ public class K1_客户端 {
                 System.out.println("启动客户端.");
                 Socket 客户端 = new Socket("127.0.0.1", 8000);
                 try (OutputStream 客户端输出流 = 客户端.getOutputStream()) {
-                    // 循环 
+                    // 循环
                     while (true) {
                         // 需要持续输出，所以不能关闭流
                         String msg = new Date() + ": hello world";
