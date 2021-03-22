@@ -1,11 +1,8 @@
 package Z_0019_Netty入门IO通讯.S3_Netty编程实现;
 
+import Z_utils.服务端输出;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -87,143 +84,53 @@ import io.netty.handler.codec.string.StringDecoder;
  * 由于1,2没有实现inbound通道处理器，因此实际inbound通道处理器的顺序为5, 4, 3.
  * 如果5实现了inbound和Outbound，则inbound事件，处理器顺序为125，oubound事件为543.
  * [/list]
- *
- * 转发事件到下一个处理器
- * 在上图中，你可能已经注意到，一个处理器不得不调用关联的上下文的事件传播方法，将事件传播给下一个处理器。
- * 这些方法如下：
- * [list]
- * <li>Inbound event propagation methods:
- * [list]
- * [*]{@link ChannelHandlerContext#fireChannelRegistered()}
- *
- * [*]{@link ChannelHandlerContext#fireChannelActive()}
- *
- * [*]{@link ChannelHandlerContext#fireChannelRead(Object)}
- *
- * [*]{@link ChannelHandlerContext#fireChannelReadComplete()}
- *
- * [*]{@link ChannelHandlerContext#fireExceptionCaught(Throwable)}
- *
- * [*]{@link ChannelHandlerContext#fireUserEventTriggered(Object)}
- *
- * [*]{@link ChannelHandlerContext#fireChannelWritabilityChanged()}
- *
- * [*]{@link ChannelHandlerContext#fireChannelInactive()}
- *
- * [*]{@link ChannelHandlerContext#fireChannelUnregistered()}
- *
- * [/list]
- * </li>
- * <li>Outbound event propagation methods:
- * [list]
- * [*]{@link ChannelHandlerContext#bind(SocketAddress, ChannelPromise)}
- *
- * [*]{@link ChannelHandlerContext#connect(SocketAddress, SocketAddress, ChannelPromise)}
- *
- * [*]{@link ChannelHandlerContext#write(Object, ChannelPromise)}
- *
- * [*]{@link ChannelHandlerContext#flush()}
- *
- * [*]{@link ChannelHandlerContext#read()}
- *
- * [*]{@link ChannelHandlerContext#disconnect(ChannelPromise)}
- *
- * [*]{@link ChannelHandlerContext#close(ChannelPromise)}
- *
- * [*]{@link ChannelHandlerContext#deregister(ChannelPromise)}
- *
- * [/list]
- * </li>
- * [/list]
- *
- * 下面的实例展示事件如何传播
- * <pre>
- * public class MyInboundHandler extends {@link ChannelInboundHandlerAdapter} {
- *     {@code @Override}
- *     public void channelActive({@link ChannelHandlerContext} ctx) {
- *         System.out.println("Connected!");
- *         ctx.fireChannelActive();
- *     }
- * }
- *
- * public class MyOutboundHandler extends {@link ChannelOutboundHandlerAdapter} {
- *     {@code @Override}
- *     public void close({@link ChannelHandlerContext} ctx, {@link ChannelPromise} promise) {
- *         System.out.println("Closing ..");
- *         ctx.close(promise);
- *     }
- * }
- * </pre>
- *
- * <p>构建管道
- * 用户可能在管道中有多个通道处理器，处理IO事件和IO请求操作(write and close)。比如，一个典型的服务器，在每个通道的
- * 管道中有如下handler，处理过程可能因为不同的协议和业务逻辑而不同
- *
- * [list=1]
- * [*]Protocol Decoder - translates binary data (e.g. {@link ByteBuf}) into a Java object.
- *
- * [*]Protocol Encoder - translates a Java object into binary data.
- *
- * [*]Business Logic Handler - performs the actual business logic (e.g. database access).
- *
- * 解码器，编码器，业务逻辑Handler
- * [/list]
- *
- * 下面为一个实例
- * <pre>IO事件操作执行器组
- * static final {@link EventExecutorGroup} group = new {@link DefaultEventExecutorGroup}(16);
- * ...
- * 获取通道的管道
- * {@link ChannelPipeline} pipeline = ch.pipeline();
- * 添加解码器和编码器
- * pipeline.addLast("decoder", new MyProtocolDecoder());
- * pipeline.addLast("encoder", new MyProtocolEncoder());
- *
- * 告诉管道，在不同于IO线程的事件执行器组中，执行通道处理器的事件执行方法，以保证IO线程不会被
- * 一个耗时任务阻塞。如果你的业务逻辑完全异步或能够快速的完成，你不要添加一个事件执行器组。
- * pipeline.addLast(group, "handler", new MyBusinessLogicHandler());
- * </pre>
- *
- * <p>线程安全
- * 由于管道时线程安全的，通道处理器可以在任何时候，添加或移除。比如：当有一些敏感数据要交换时，插入加密Handler，
- * 在交换后，移除。
  */
 public class N1_服务端 {
-    
+
+    /*
+     * 单线程模型 (单Reactor单线程)
+     * 多线程模型 (单Reactor多线程)
+     * 主从多线程模型 (多Reactor多线程)
+     * https://juejin.im/post/5dac6ef75188252bc1657ead
+     */
     public static void main(String[] args) {
-        /*
-         * 单线程模型 (单Reactor单线程)
-         * 多线程模型 (单Reactor多线程)
-         * 主从多线程模型 (多Reactor多线程)
-         * https://juejin.im/post/5dac6ef75188252bc1657ead
-         * */
-        final NioEventLoopGroup 主从多线程模型接收连接请求线程 = new NioEventLoopGroup();
-        final NioEventLoopGroup 主从多线程模型处理线程 = new NioEventLoopGroup();
-        
-        // 异步的服务器端 TCP Socket 连接
-        final Class<NioServerSocketChannel> 通道类型 = NioServerSocketChannel.class;
-    
-        final ChannelInitializer<NioSocketChannel> 处理逻辑 = new ChannelInitializer<NioSocketChannel>() {
+        运行();
+    }
+
+    public static void 运行() {
+        final NioEventLoopGroup boss线程组 = new NioEventLoopGroup();
+        final NioEventLoopGroup work线程组 = new NioEventLoopGroup();
+        final Class<NioServerSocketChannel> 套接字类型 = NioServerSocketChannel.class;
+        // 是一种特殊的ChannelInboundHandler
+        final ChannelInitializer<NioSocketChannel> 管道工厂 = new ChannelInitializer<NioSocketChannel>() {
             @Override
             protected void initChannel(NioSocketChannel 通道) {
                 final StringDecoder 字节码转字符解码器 = new StringDecoder();
+                // 网络数据从外部流入内部
                 final SimpleChannelInboundHandler<String> 消息处理器 = new SimpleChannelInboundHandler<String>() {
                     @Override
                     protected void channelRead0(ChannelHandlerContext 上下文, String 消息) {
-                        System.out.println(消息);
+                        服务端输出.控制台(消息);
                     }
                 };
+                // 从上到下
                 通道.pipeline().addLast(字节码转字符解码器);
                 通道.pipeline().addLast(消息处理器);
             }
         };
-    
+
+        服务端输出.控制台("开始启动...");
         final ServerBootstrap 服务端启动器 = new ServerBootstrap();
         服务端启动器
-                .group(主从多线程模型接收连接请求线程, 主从多线程模型处理线程)
-                .channel(通道类型)
-                .childHandler(处理逻辑)
+                //设置线程池 前者用来处理accept事件，后者用于处理已经建立的连接的io
+                .group(boss线程组, work线程组)
+                //设置socket工厂
+                .channel(套接字类型)
+                //设置管道工厂
+                .childHandler(管道工厂)
+                //绑定端口8000
                 .bind(8000);
+        服务端输出.控制台("启动成功!");
     }
-    
+
 }

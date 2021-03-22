@@ -1,5 +1,6 @@
 package Z_0019_Netty入门IO通讯.S3_Netty编程实现;
 
+import Z_utils.客户端输出;
 import cn.hutool.core.date.DateUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -11,36 +12,48 @@ import io.netty.handler.codec.string.StringEncoder;
 import java.util.concurrent.TimeUnit;
 
 
-public class N1_客户端 {
-    
+public class N2_客户端 {
+
     public static void main(String[] args) throws Exception {
-        
-        final Bootstrap 客户端启动器 = new Bootstrap();
+        运行();
+    }
+
+    public static void 运行() {
         final NioEventLoopGroup 读写线程组 = new NioEventLoopGroup();
-        final Class<NioSocketChannel> 通道类型 = NioSocketChannel.class;
-        final ChannelInitializer<Channel> 处理逻辑 = new ChannelInitializer<Channel>() {
+        final Class<NioSocketChannel> 套接字类型 = NioSocketChannel.class;
+        // 是一种特殊的ChannelInboundHandler
+        final ChannelInitializer<Channel> 管道工厂 = new ChannelInitializer<Channel>() {
             @Override
             protected void initChannel(Channel channel) {
                 final StringEncoder 字符串字节码编码器 = new StringEncoder();
                 channel.pipeline().addLast(字符串字节码编码器);
             }
         };
-        
+
+        final Bootstrap 客户端启动器 = new Bootstrap();
         客户端启动器
+                //设置线程池
                 .group(读写线程组)
-                .channel(通道类型)
-                .handler(处理逻辑);
-        
+                //设置socket工厂
+                .channel(套接字类型)
+                //设置管道工厂
+                .handler(管道工厂);
+
         final Channel 通道 = 客户端启动器
                 .connect("127.0.0.1", 8000)
                 .channel();
-        
+
         String 消息;
         while (true) {
             消息 = DateUtil.now() + ": hello world！";
+            客户端输出.控制台(消息);
             通道.writeAndFlush(消息);
-            TimeUnit.SECONDS.sleep(2);
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
-    
+
 }

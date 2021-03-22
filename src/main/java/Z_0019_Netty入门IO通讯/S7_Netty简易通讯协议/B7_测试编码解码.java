@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * 描述：
+ *
  * @author zengyufei
  */
 public class B7_测试编码解码 {
@@ -15,9 +16,10 @@ public class B7_测试编码解码 {
         数据包.set用户唯一标识("admin");
         数据包.set用户名("管理员");
         数据包.set密码("123456");
-        ByteBuf 编码后二进制流 = B6_编码.编码(数据包);
 
+        ByteBuf 编码后二进制流 = B6_编码.编码(数据包);
         B1_抽象数据包 解码后抽象数据包 = B6_解码.解码(编码后二进制流);
+
         B3_具体数据包 解码后数据包 = (B3_具体数据包) 解码后抽象数据包;
         Console.log(JSONObject.toJSONString(解码后数据包));
     }

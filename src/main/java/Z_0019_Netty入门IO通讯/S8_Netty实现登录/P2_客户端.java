@@ -11,24 +11,26 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class P2_客户端 {
 
     public static void main(String[] args) {
-        NioEventLoopGroup 读写线程组 = new NioEventLoopGroup();
-        // 还有 BIO 模型：OioSocketChannel
-        Class<NioSocketChannel> 通道类型 = NioSocketChannel.class;
-        ChannelInitializer<NioSocketChannel> 处理逻辑 = new ChannelInitializer<NioSocketChannel>() {
-            @Override
-            protected void initChannel(NioSocketChannel nioSocketChannel) {
-                nioSocketChannel.pipeline().addLast(new P9_客户端逻辑处理器());
-            }
-        };
+        运行();
+    }
 
+    public static void 运行() {
+        NioEventLoopGroup 读写线程组 = new NioEventLoopGroup();
+        Class<NioSocketChannel> 套接字类型 = NioSocketChannel.class;
         Bootstrap 启动器 = new Bootstrap();
         启动器
                 .group(读写线程组)
-                .channel(通道类型)
-                .handler(处理逻辑);
-
+                .channel(套接字类型)
+                .handler(管道工厂);
         启动器.connect("127.0.0.1", 8000);
-
     }
+
+    // 是一种特殊的ChannelInboundHandler
+    private static final ChannelInitializer<NioSocketChannel> 管道工厂 = new ChannelInitializer<NioSocketChannel>() {
+        @Override
+        protected void initChannel(NioSocketChannel nioSocketChannel) {
+            nioSocketChannel.pipeline().addLast(new P9_客户端逻辑处理器());
+        }
+    };
 
 }
