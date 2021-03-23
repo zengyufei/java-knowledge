@@ -1,6 +1,6 @@
 package Z_0001_设计模式.D_14_模板方法模式;
 
-import Z_utils.Console;
+import Z_utils.输出;
 
 /**
  * 描述：
@@ -17,12 +17,12 @@ public abstract class R1_冲泡饮料 {
     }
 
     final private void 倒热水到杯子() {
-        Console.getThisMethodName();
+        输出.当前方法名();
     }
 
 
     final private void 烧水() {
-        Console.getThisMethodName();
+        输出.当前方法名();
     }
 
     abstract void 加主料();

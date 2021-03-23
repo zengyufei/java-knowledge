@@ -1,14 +1,14 @@
 package Z_0001_设计模式.D_03_单例模式.L1_懒汉式单例;
 
 
-import Z_utils.Console;
+import Z_utils.输出;
 
 import java.util.concurrent.CountDownLatch;
 
 public class S6_测试双重检验加锁懒汉式单例 {
 
     private static void 正常测试() {
-        Console.getThisMethodFullName("开始。");
+        输出.当前方法全名("开始。");
         S5_双重检验加锁懒汉式单例 s1 = S5_双重检验加锁懒汉式单例.getInstance();
         S5_双重检验加锁懒汉式单例 s2 = S5_双重检验加锁懒汉式单例.getInstance();
         S5_双重检验加锁懒汉式单例 s3 = new S5_双重检验加锁懒汉式单例();
@@ -18,7 +18,7 @@ public class S6_测试双重检验加锁懒汉式单例 {
     private static int currentValue = 0;
 
     private static void 多线程测试() {
-        Console.getThisMethodFullName("开始。");
+        输出.当前方法全名("开始。");
 
         // 新建一个 CountDwonLatch 对象并传入计数器的值
         CountDownLatch cd = new CountDownLatch(10);

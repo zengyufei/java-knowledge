@@ -2,7 +2,7 @@ package Z_0001_设计模式.D_06_适配器模式.S2_对象设配器;
 
 import Z_0001_设计模式.D_06_适配器模式.S1_类适配器.P1_香港插头;
 import Z_0001_设计模式.D_06_适配器模式.S1_类适配器.P2_内地插头标准;
-import Z_utils.Console;
+import Z_utils.输出;
 
 /**
  * 香港提供的苹果插头为：三孔 电压 200 伏，内地标准为 两孔 电压 220 伏
@@ -21,7 +21,7 @@ public class O1_转接头 implements P2_内地插头标准 {
     public void 输出电流到电器() {
         香港插头.电压 = 220;
         香港插头.电阻 += 2;
-        Console.getThisMethodName(香港插头.电压 / 香港插头.电阻 + " 安");
+        输出.当前方法名(香港插头.电压 / 香港插头.电阻 + " 安");
     }
 
     @Override

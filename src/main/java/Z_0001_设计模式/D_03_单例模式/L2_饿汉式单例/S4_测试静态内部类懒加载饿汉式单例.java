@@ -1,12 +1,12 @@
 package Z_0001_设计模式.D_03_单例模式.L2_饿汉式单例;
 
 
-import Z_utils.Console;
+import Z_utils.输出;
 
 public class S4_测试静态内部类懒加载饿汉式单例 {
 
     private static void 正常测试() {
-        Console.getThisMethodFullName("开始。");
+        输出.当前方法全名("开始。");
         S3_静态内部类懒加载饿汉式单例 s1 = S3_静态内部类懒加载饿汉式单例.getInstance();
         S3_静态内部类懒加载饿汉式单例 s2 = S3_静态内部类懒加载饿汉式单例.getInstance();
         // S3_静态内部类懒加载饿汉式单例 s3 = new S3_静态内部类懒加载饿汉式单例(); new 编译报错 private 不允许创建

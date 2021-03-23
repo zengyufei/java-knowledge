@@ -1,12 +1,12 @@
 package Z_0001_设计模式.D_03_单例模式.L1_懒汉式单例;
 
 
-import Z_utils.Console;
+import Z_utils.输出;
 
 public class S2_测试非同步懒汉式单例 {
 
     private static void 正常测试() {
-        Console.getThisMethodFullName("开始。");
+        输出.当前方法全名("开始。");
         S1_非同步懒汉式单例 s1 = S1_非同步懒汉式单例.getInstance();
         S1_非同步懒汉式单例 s2 = S1_非同步懒汉式单例.getInstance();
         S1_非同步懒汉式单例 s3 = new S1_非同步懒汉式单例();
