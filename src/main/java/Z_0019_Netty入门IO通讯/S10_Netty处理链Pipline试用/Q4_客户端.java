@@ -12,23 +12,26 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class Q4_客户端 {
 
     public static void main(String[] args) {
-        final NioEventLoopGroup 读写线程组 = new NioEventLoopGroup();
-        final Class<NioSocketChannel> 通道类型 = NioSocketChannel.class;
-        final ChannelInitializer<NioSocketChannel> 处理逻辑 = new ChannelInitializer<NioSocketChannel>() {
-            @Override
-            protected void initChannel(NioSocketChannel nioSocketChannel) {
-                nioSocketChannel.pipeline().addLast(new F2_客户端逻辑处理器());
-            }
-        };
-
-        final Bootstrap 客户端启动器 = new Bootstrap();
-        客户端启动器
-                .group(读写线程组)
-                .channel(通道类型)
-                .handler(处理逻辑);
-
-        客户端启动器.connect("127.0.0.1", 8000);
-
+        运行();
     }
+
+    public static void 运行() {
+        final NioEventLoopGroup 读写线程组 = new NioEventLoopGroup();
+        final Class<NioSocketChannel> 套接字类型 = NioSocketChannel.class;
+        final Bootstrap 启动器 = new Bootstrap();
+        启动器
+                .group(读写线程组)
+                .channel(套接字类型)
+                .handler(管道工厂);
+        启动器.connect("127.0.0.1", 8000);
+    }
+
+    // 是一种特殊的ChannelInboundHandler
+    private static final ChannelInitializer<NioSocketChannel> 管道工厂 = new ChannelInitializer<NioSocketChannel>() {
+        @Override
+        protected void initChannel(NioSocketChannel nioSocketChannel) {
+            nioSocketChannel.pipeline().addLast(new F2_客户端逻辑处理器());
+        }
+    };
 
 }

@@ -19,13 +19,14 @@ public class P1_服务端逻辑处理器 extends ChannelInboundHandlerAdapter {
         // 1: 收到消息
         P3_抽象数据包 解码后的数据 = 消息解码((ByteBuf) 消息);
         if (解码后的数据 instanceof P6_登录请求数据包) {
-            boolean result = 核对登录信息((P6_登录请求数据包) 解码后的数据);
+            P6_登录请求数据包 p6_登录请求数据包 = (P6_登录请求数据包) 解码后的数据;
+            boolean result = 核对登录信息(p6_登录请求数据包);
             if (result) {
-                // 2: 回复
-                回复对方(上下文, "成功", "登录成功！");
+                P7_登录响应数据包 登录响应数据包 = 构造登录响应数据包("成功", "登录成功！");
+                回复对方(上下文, 登录响应数据包);
             } else {
-                // 2: 回复
-                回复对方(上下文, "失败", "登录失败！");
+                P7_登录响应数据包 登录响应数据包 = 构造登录响应数据包("失败", "登录失败！");
+                回复对方(上下文, 登录响应数据包);
             }
         }
     }
@@ -36,13 +37,17 @@ public class P1_服务端逻辑处理器 extends ChannelInboundHandlerAdapter {
         return 解码后的数据;
     }
 
-    private void 回复对方(ChannelHandlerContext 上下文, String 状态, String 消息) {
+    private void 回复对方(ChannelHandlerContext 上下文, P7_登录响应数据包 登录响应数据包) {
+        ByteBuf 编码后的响应数据 = P8_编码.编码(上下文.alloc(), 登录响应数据包);
+        上下文.channel().writeAndFlush(编码后的响应数据);
+    }
+
+    private P7_登录响应数据包 构造登录响应数据包(String 状态, String 消息) {
         P7_登录响应数据包 登录响应数据包 = new P7_登录响应数据包();
         登录响应数据包.set是否成功(状态);
         登录响应数据包.set消息(消息);
         登录响应数据包.set版本号((byte) 2);
-        ByteBuf 编码后的响应数据 = P8_编码.编码(上下文.alloc(), 登录响应数据包);
-        上下文.channel().writeAndFlush(编码后的响应数据);
+        return 登录响应数据包;
     }
 
     private boolean 核对登录信息(P6_登录请求数据包 解码后的数据) {
@@ -51,10 +56,9 @@ public class P1_服务端逻辑处理器 extends ChannelInboundHandlerAdapter {
         String 姓名 = 登录请求数据包.get姓名();
         String 密码 = 登录请求数据包.get密码();
         String 用户名 = 登录请求数据包.get用户名();
-        boolean result = StrUtil.equals(姓名, "admin")
+        return StrUtil.equals(姓名, "admin")
                 && StrUtil.equals(用户名, "admin")
                 && StrUtil.equals(密码, "admin");
-        return result;
     }
 
 }

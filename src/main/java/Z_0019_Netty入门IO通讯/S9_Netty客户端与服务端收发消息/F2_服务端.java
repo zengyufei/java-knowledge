@@ -11,6 +11,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  * 要实现的功能是：客户端连接成功之后，向服务端写一段数据 ，服务端收到数据之后打印，并向客户端回一段数据
  */
 public class F2_服务端 {
+
     /*
      * 单线程模型 (单Reactor单线程)
      * 多线程模型 (单Reactor多线程)
@@ -22,25 +23,16 @@ public class F2_服务端 {
     }
 
     public static void 运行() {
-        final NioEventLoopGroup 主从多线程模型接收连接请求线程 = new NioEventLoopGroup();
-        final NioEventLoopGroup 主从多线程模型处理线程 = new NioEventLoopGroup();
-
-        // 异步的服务器端 TCP Socket 连接
-        final Class<NioServerSocketChannel> 通道类型 = NioServerSocketChannel.class;
-        final ChannelInitializer<NioSocketChannel> 子线程处理读写线程 = new ChannelInitializer<NioSocketChannel>() {
-            @Override
-            protected void initChannel(NioSocketChannel nioSocketChannel) {
-                nioSocketChannel.pipeline().addLast(new F1_服务端逻辑处理器());
-            }
-        };
-
-        final ServerBootstrap 服务端启动器 = new ServerBootstrap();
-        服务端启动器
-                .group(主从多线程模型接收连接请求线程, 主从多线程模型处理线程)
-                .channel(通道类型)
-                .childHandler(子线程处理读写线程);
-
-        服务端启动器.bind(8000).addListener(future -> {
+        final NioEventLoopGroup boss线程组 = new NioEventLoopGroup();
+        final NioEventLoopGroup work线程组 = new NioEventLoopGroup();
+        final Class<NioServerSocketChannel> 套接字类型 = NioServerSocketChannel.class;
+        ServerBootstrap 启动器 = new ServerBootstrap();
+        启动器
+                //设置线程池 前者用来处理accept事件，后者用于处理已经建立的连接的io
+                .group(boss线程组, work线程组)
+                .channel(套接字类型)
+                .childHandler(管道工厂);
+        启动器.bind(8000).addListener(future -> {
             if (future.isSuccess()) {
                 System.out.println("端口[8000]绑定成功!");
             } else {
@@ -48,5 +40,13 @@ public class F2_服务端 {
             }
         });
     }
+
+    // 是一种特殊的ChannelInboundHandler
+    private static final ChannelInitializer<NioSocketChannel> 管道工厂 = new ChannelInitializer<NioSocketChannel>() {
+        @Override
+        protected void initChannel(NioSocketChannel nioSocketChannel) {
+            nioSocketChannel.pipeline().addLast(new F1_服务端逻辑处理器());
+        }
+    };
 
 }
