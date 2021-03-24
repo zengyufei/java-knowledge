@@ -1,18 +1,19 @@
-package Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V3_编码解码;
+package Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V4_应用层;
 
-import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V1_序列化.V1_序列化接口;
-import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V1_序列化.V2_JSON序列化实现;
-import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V2_数据包.V1_抽象数据包;
+import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V2_接口层.V3_抽象数据包;
+import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V2_接口层.V4_序列化接口;
+import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V3_实现层.V5_JSON序列化实现;
 import io.netty.buffer.ByteBuf;
 
 /**
  * 描述：
+ *
  * @author zengyufei
  */
-public class V4_编码 {
+public class V10_编码 {
 
-    public static void 编码(ByteBuf 数据载体, V1_抽象数据包 抽象数据包) {
-        V2_JSON序列化实现 json序列化实现 = V1_序列化接口.默认实现;
+    public static void 编码(ByteBuf 数据载体, V3_抽象数据包 抽象数据包) {
+        V5_JSON序列化实现 json序列化实现 = V4_序列化接口.默认实现;
         byte 算法类型 = json序列化实现.算法类型();
         byte[] 序列化后的数据 = json序列化实现.序列化(抽象数据包);
         byte 版本 = 抽象数据包.版本;

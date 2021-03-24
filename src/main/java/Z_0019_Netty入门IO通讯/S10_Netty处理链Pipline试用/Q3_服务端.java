@@ -28,10 +28,10 @@ public class Q3_服务端 {
         final Class<NioServerSocketChannel> 套接字类型 = NioServerSocketChannel.class;
         final ServerBootstrap 启动器 = new ServerBootstrap();
         启动器
+                //设置线程池 前者用来处理accept事件，后者用于处理已经建立的连接的io
                 .group(boss线程组, work线程组)
                 .channel(套接字类型)
                 .childHandler(管道工厂);
-
         启动器.bind(8000).addListener(future -> {
             if (future.isSuccess()) {
                 System.out.println("端口[8000]绑定成功!");

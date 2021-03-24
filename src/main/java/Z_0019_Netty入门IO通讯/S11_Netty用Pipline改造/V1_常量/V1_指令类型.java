@@ -1,10 +1,11 @@
-package Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V2_数据包;
+package Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V1_常量;
 
 /**
  * 描述：
+ *
  * @author zengyufei
  */
-public interface V1_指令 {
+public interface V1_指令类型 {
 
     /**
      * 登录请求

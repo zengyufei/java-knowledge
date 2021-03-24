@@ -1,16 +1,18 @@
-package Z_0019_Netty入门IO通讯.S13_Netty拆包粘包解决;
+package Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造;
 
-import Z_0019_Netty入门IO通讯.S12_Netty拆包粘包问题重现.H2_粘包粘包问题重现客户端处理器;
+import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V5_处理链.V12_编码处理器;
+import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V5_处理链.V13_解码处理器;
+import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V5_处理链.V15_登录响应处理器;
+import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V5_处理链.V17_消息发送响应处理器;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
 
 /**
  * 要实现的功能是：客户端连接成功之后，向服务端写一段数据 ，服务端收到数据之后打印，并向客户端回一段数据
  */
-public class L2_客户端 {
+public class V7_客户端 {
 
     public static void main(String[] args) {
         运行();
@@ -31,8 +33,10 @@ public class L2_客户端 {
     private static final ChannelInitializer<NioSocketChannel> 通道工厂 = new ChannelInitializer<NioSocketChannel>() {
         @Override
         protected void initChannel(NioSocketChannel nioSocketChannel) {
-            nioSocketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
-            nioSocketChannel.pipeline().addLast(new H2_粘包粘包问题重现客户端处理器());
+            nioSocketChannel.pipeline().addLast(new V13_解码处理器());
+            nioSocketChannel.pipeline().addLast(new V15_登录响应处理器());
+            nioSocketChannel.pipeline().addLast(new V17_消息发送响应处理器());
+            nioSocketChannel.pipeline().addLast(new V12_编码处理器());
         }
     };
 

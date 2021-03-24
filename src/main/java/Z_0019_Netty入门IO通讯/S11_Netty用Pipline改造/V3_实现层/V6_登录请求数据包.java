@@ -1,10 +1,14 @@
-package Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V2_数据包;
+package Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V3_实现层;
+
+import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V1_常量.V1_指令类型;
+import Z_0019_Netty入门IO通讯.S11_Netty用Pipline改造.V2_接口层.V3_抽象数据包;
 
 /**
  * 描述：
+ *
  * @author zengyufei
  */
-public class V3_登录请求数据包 extends V1_抽象数据包 {
+public class V6_登录请求数据包 extends V3_抽象数据包 {
 
     private String 账号;
     private String 密码;
@@ -12,7 +16,7 @@ public class V3_登录请求数据包 extends V1_抽象数据包 {
 
     @Override
     public byte 指令() {
-        return V1_指令.LOGIN_REQUEST;
+        return V1_指令类型.LOGIN_REQUEST;
     }
 
     public String get账号() {
