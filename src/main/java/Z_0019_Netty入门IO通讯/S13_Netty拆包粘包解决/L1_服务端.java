@@ -13,6 +13,13 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
  */
 public class L1_服务端 {
 
+    /*
+     * netty提供了以下三种方式解决TCP粘包和拆包问题：
+     * DelimiterBasedFrameDecoder：分隔符。
+     * LineBasedFrameDecoder：结束符\n。
+     * FixedLengthFrameDecoder：固定长度。
+     * LengthFieldBasedFrameDecoder+LengthFieldPrepender：自定义消息长度
+     */
     public static void main(String[] args) {
         运行();
     }

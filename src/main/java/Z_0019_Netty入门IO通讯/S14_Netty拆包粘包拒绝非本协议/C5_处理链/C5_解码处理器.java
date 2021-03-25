@@ -1,6 +1,6 @@
-package Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C4_处理器;
+package Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链;
 
-import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C3_编码解码.C4_解码;
+import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C4_应用层.C4_解码;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 描述：
+ *
  * @author zengyufei
  */
 public class C5_解码处理器 extends ByteToMessageDecoder {

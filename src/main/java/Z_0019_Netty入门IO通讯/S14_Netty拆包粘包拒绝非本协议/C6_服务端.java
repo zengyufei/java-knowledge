@@ -1,9 +1,6 @@
-package Z_0019_Netty入门IO通讯.S15_NettyChannelHandler生命周期;
+package Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议;
 
-import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链.C5_编码处理器;
-import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链.C5_解码处理器;
-import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链.C6_登录请求处理器;
-import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链.C7_拒绝非本协议以及定长解决拆包粘包处理器;
+import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -13,7 +10,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 /**
  * 要实现的功能是：客户端连接成功之后，向服务端写一段数据 ，服务端收到数据之后打印，并向客户端回一段数据
  */
-public class H1_服务端 {
+public class C6_服务端 {
 
     public static void main(String[] args) {
         运行();
@@ -43,9 +40,9 @@ public class H1_服务端 {
         @Override
         protected void initChannel(NioSocketChannel nioSocketChannel) {
             nioSocketChannel.pipeline().addLast(new C7_拒绝非本协议以及定长解决拆包粘包处理器());
-            nioSocketChannel.pipeline().addLast(new H3_ChannelHandler生命周期打印());
             nioSocketChannel.pipeline().addLast(new C5_解码处理器());
             nioSocketChannel.pipeline().addLast(new C6_登录请求处理器());
+            nioSocketChannel.pipeline().addLast(new C6_消息发送请求处理器());
             nioSocketChannel.pipeline().addLast(new C5_编码处理器());
         }
     };

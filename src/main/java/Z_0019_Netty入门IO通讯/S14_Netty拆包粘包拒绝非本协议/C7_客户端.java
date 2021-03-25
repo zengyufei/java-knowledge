@@ -1,24 +1,19 @@
-package Z_0019_Netty入门IO通讯.S13_Netty拆包粘包解决;
+package Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议;
 
-import Z_0019_Netty入门IO通讯.S12_Netty拆包粘包问题重现.H2_粘包粘包问题重现客户端处理器;
+import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链.C5_解码处理器;
+import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链.C6_消息发送响应处理器;
+import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链.C6_登录响应处理器;
+import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链.C8_错误编码处理器;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
 
 /**
  * 要实现的功能是：客户端连接成功之后，向服务端写一段数据 ，服务端收到数据之后打印，并向客户端回一段数据
  */
-public class L2_客户端 {
+public class C7_客户端 {
 
-    /*
-     * netty提供了以下三种方式解决TCP粘包和拆包问题：
-     * DelimiterBasedFrameDecoder：分隔符。
-     * LineBasedFrameDecoder：结束符\n。
-     * FixedLengthFrameDecoder：固定长度。
-     * LengthFieldBasedFrameDecoder+LengthFieldPrepender：自定义消息长度
-     */
     public static void main(String[] args) {
         运行();
     }
@@ -38,8 +33,10 @@ public class L2_客户端 {
     private static final ChannelInitializer<NioSocketChannel> 通道工厂 = new ChannelInitializer<NioSocketChannel>() {
         @Override
         protected void initChannel(NioSocketChannel nioSocketChannel) {
-            nioSocketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
-            nioSocketChannel.pipeline().addLast(new H2_粘包粘包问题重现客户端处理器());
+            nioSocketChannel.pipeline().addLast(new C5_解码处理器());
+            nioSocketChannel.pipeline().addLast(new C6_登录响应处理器());
+            nioSocketChannel.pipeline().addLast(new C6_消息发送响应处理器());
+            nioSocketChannel.pipeline().addLast(new C8_错误编码处理器());
         }
     };
 

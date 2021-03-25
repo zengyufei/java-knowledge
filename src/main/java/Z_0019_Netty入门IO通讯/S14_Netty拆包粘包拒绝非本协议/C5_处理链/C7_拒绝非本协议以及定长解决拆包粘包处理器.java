@@ -1,6 +1,6 @@
-package Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C4_处理器;
+package Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C5_处理链;
 
-import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C3_编码解码.C4_编码;
+import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C4_应用层.C4_编码;
 import cn.hutool.core.lang.Console;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,6 +8,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 /**
  * 描述：
+ *
  * @author zengyufei
  */
 public class C7_拒绝非本协议以及定长解决拆包粘包处理器 extends LengthFieldBasedFrameDecoder {

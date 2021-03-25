@@ -1,7 +1,8 @@
-package Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C2_数据包;
+package Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C1_常量;
 
 /**
  * 描述：
+ *
  * @author zengyufei
  */
 public interface C1_指令 {

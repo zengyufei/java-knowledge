@@ -1,10 +1,14 @@
-package Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C2_数据包;
+package Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C3_实现层;
+
+import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C1_常量.C1_指令;
+import Z_0019_Netty入门IO通讯.S14_Netty拆包粘包拒绝非本协议.C2_接口层.C3_抽象数据包;
 
 /**
  * 描述：
+ *
  * @author zengyufei
  */
-public class C3_登录响应数据包 extends C1_抽象数据包 {
+public class C7_登录响应数据包 extends C3_抽象数据包 {
 
     private String 代码;
     private String 是否成功;
