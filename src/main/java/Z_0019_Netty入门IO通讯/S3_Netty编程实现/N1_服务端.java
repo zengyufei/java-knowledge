@@ -1,6 +1,6 @@
 package Z_0019_Netty入门IO通讯.S3_Netty编程实现;
 
-import Z_utils.服务端输出;
+import Z_utils.输出;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -93,6 +93,7 @@ public class N1_服务端 {
      * 主从多线程模型 (多Reactor多线程)
      * https://juejin.im/post/5dac6ef75188252bc1657ead
      */
+
     public static void main(String[] args) {
         运行();
     }
@@ -101,25 +102,6 @@ public class N1_服务端 {
         final NioEventLoopGroup boss线程组 = new NioEventLoopGroup();
         final NioEventLoopGroup work线程组 = new NioEventLoopGroup();
         final Class<NioServerSocketChannel> 套接字类型 = NioServerSocketChannel.class;
-        // 是一种特殊的ChannelInboundHandler
-        final ChannelInitializer<NioSocketChannel> 管道工厂 = new ChannelInitializer<NioSocketChannel>() {
-            @Override
-            protected void initChannel(NioSocketChannel 通道) {
-                final StringDecoder 字节码转字符解码器 = new StringDecoder();
-                // 网络数据从外部流入内部
-                final SimpleChannelInboundHandler<String> 消息处理器 = new SimpleChannelInboundHandler<String>() {
-                    @Override
-                    protected void channelRead0(ChannelHandlerContext 上下文, String 消息) {
-                        服务端输出.控制台(消息);
-                    }
-                };
-                // 从上到下
-                通道.pipeline().addLast(字节码转字符解码器);
-                通道.pipeline().addLast(消息处理器);
-            }
-        };
-
-        服务端输出.控制台("开始启动...");
         final ServerBootstrap 服务端启动器 = new ServerBootstrap();
         服务端启动器
                 //设置线程池 前者用来处理accept事件，后者用于处理已经建立的连接的io
@@ -130,7 +112,24 @@ public class N1_服务端 {
                 .childHandler(管道工厂)
                 //绑定端口8000
                 .bind(8000);
-        服务端输出.控制台("启动成功!");
     }
 
+    // 是一种特殊的ChannelInboundHandler
+    private static final ChannelInitializer<NioSocketChannel> 管道工厂 = new ChannelInitializer<NioSocketChannel>() {
+        @Override
+        protected void initChannel(NioSocketChannel 通道) {
+            final StringDecoder 字节码转字符解码器 = new StringDecoder();
+            // 从上到下
+            通道.pipeline().addLast(字节码转字符解码器);
+            通道.pipeline().addLast(消息处理器);
+        }
+    };
+
+    // 网络数据从外部流入内部
+    private static final SimpleChannelInboundHandler<String> 消息处理器 = new SimpleChannelInboundHandler<String>() {
+        @Override
+        protected void channelRead0(ChannelHandlerContext 上下文, String 消息) {
+            输出.服务端.控制台(消息);
+        }
+    };
 }

@@ -24,8 +24,8 @@ public class H2_客户端 {
         启动器
                 .group(数据读写子线程组)
                 .channel(套接字类型)
-                .handler(通道工厂);
-        启动器.connect("127.0.0.1", 8000);
+                .handler(通道工厂)
+                .connect("127.0.0.1", 8000);
     }
 
     // 是一种特殊的ChannelInboundHandler

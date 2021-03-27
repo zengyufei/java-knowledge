@@ -1,6 +1,6 @@
 package Z_0019_Netty入门IO通讯.S1_IO编程实现;
 
-import Z_utils.客户端输出;
+import Z_utils.输出;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.io.IoUtil;
@@ -37,7 +37,7 @@ public class K2_客户端 {
     }
 
     private static void 获取套接字() {
-        客户端输出.控制台("启动");
+        输出.客户端.控制台("启动");
         try {
             客户端套接字 = new Socket("127.0.0.1", 8000);
         } catch (IOException e) {
@@ -51,7 +51,7 @@ public class K2_客户端 {
             while (true) {
                 // 需要持续输出，所以不能关闭流
                 IoUtil.write(客户端输出流, false, 消息.getBytes());
-                客户端输出.控制台("发送消息[{}]", 消息);
+                输出.客户端.控制台("发送消息[{}]", 消息);
                 // 每隔两秒
                 TimeUnit.SECONDS.sleep(2);
             }
@@ -63,7 +63,7 @@ public class K2_客户端 {
     private static void 输出异常(Exception e) {
         String message = ExceptionUtil.getMessage(e);
         if (StrUtil.containsAnyIgnoreCase(message, "Connection reset by peer: socket write error")) {
-            客户端输出.控制台("服务端停止服务, 自己也停止.");
+            输出.客户端.控制台("服务端停止服务, 自己也停止.");
             System.exit(0);
         } else {
             throw new RuntimeException(e);

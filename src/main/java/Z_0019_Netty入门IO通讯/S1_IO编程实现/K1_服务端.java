@@ -1,6 +1,6 @@
 package Z_0019_Netty入门IO通讯.S1_IO编程实现;
 
-import Z_utils.服务端输出;
+import Z_utils.输出;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.thread.ThreadUtil;
@@ -41,8 +41,8 @@ public class K1_服务端 {
         ServerSocket 服务端套接字 = new ServerSocket(8000);
         // 1: 启动
         ThreadUtil.execute(() -> {
-            服务端输出.控制台("启动");
-            服务端输出.控制台("阻塞, 等待客户端接入.......");
+            输出.服务端.控制台("启动");
+            输出.服务端.控制台("阻塞, 等待客户端接入.......");
             while (true) {
                 try {
                     // 2: 阻塞线程获得新连接
@@ -71,7 +71,7 @@ public class K1_服务端 {
                     break;
                 }
                 String 从客户端发送过来的消息 = new String(单次承载数据容器, 0, 读取数据长度).trim();
-                服务端输出.控制台("从客户端发送过来的消息{}", 从客户端发送过来的消息);
+                输出.服务端.控制台("从客户端发送过来的消息{}", 从客户端发送过来的消息);
             }
         } catch (Exception e) {
             输出异常(客户端接入的请求通道.getInetAddress().getHostAddress(), e);
@@ -79,12 +79,12 @@ public class K1_服务端 {
     }
 
     private static void 打印客户端ip(Socket 客户端接入的请求通道) {
-        服务端输出.控制台("有客户端接入, ip: {}", 客户端接入的请求通道.getInetAddress().getHostAddress());
+        输出.服务端.控制台("有客户端接入, ip: {}", 客户端接入的请求通道.getInetAddress().getHostAddress());
     }
 
     private static void 输出异常(String 客户端ip, Exception e) {
         if (StrUtil.containsAnyIgnoreCase(ExceptionUtil.getMessage(e), "Connection reset")) {
-            服务端输出.控制台("有客户端断开连接, 断开ip为[{}].", 客户端ip);
+            输出.服务端.控制台("有客户端断开连接, 断开ip为[{}].", 客户端ip);
         } else {
             throw new RuntimeException(e);
         }

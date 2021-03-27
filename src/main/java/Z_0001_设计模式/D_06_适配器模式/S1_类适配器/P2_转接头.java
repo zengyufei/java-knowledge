@@ -13,7 +13,7 @@ public class P2_转接头 extends P1_香港插头 implements P2_内地插头标�
     public void 输出电流到电器() {
         电压 = 220;
         电阻 += 2;
-        输出.当前方法名(电压 / 电阻 + " 安");
+        输出.当前方法简单名(电压 / 电阻 + " 安");
     }
 
     @Override

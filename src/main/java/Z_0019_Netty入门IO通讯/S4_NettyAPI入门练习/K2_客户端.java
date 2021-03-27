@@ -1,6 +1,6 @@
 package Z_0019_Netty入门IO通讯.S4_NettyAPI入门练习;
 
-import Z_utils.客户端输出;
+import Z_utils.输出;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
@@ -23,29 +23,23 @@ public class K2_客户端 {
 
     public static void 运行() {
         NioEventLoopGroup 读写线程组 = new NioEventLoopGroup();
-        Bootstrap 启动器 = 启动客户端(读写线程组);
-        //失败重连逻辑(启动器, "127.0.0.1", 8000);
-        失败重试重连逻辑(启动器, "127.0.0.1", 8000, MAX_RETRY, 2);
-    }
-
-    private static Bootstrap 启动客户端(NioEventLoopGroup 读写线程组) {
-        Bootstrap 启动器 = new Bootstrap();
         Class<NioSocketChannel> 套接字类型 = NioSocketChannel.class;
+        Bootstrap 启动器 = new Bootstrap();
         启动器.attr(AttributeKey.valueOf("给主线程设置值"), "你好，主线程");
         启动器
                 //设置线程池
                 .group(读写线程组)
                 .channel(套接字类型)
                 .handler(管道工厂);
-        return 启动器;
+        //失败重连逻辑(启动器, "127.0.0.1", 8000);
+        失败重试重连逻辑(启动器, "127.0.0.1", 8000, MAX_RETRY, 2);
     }
-
 
     // 是一种特殊的ChannelInboundHandler
     private static final ChannelInitializer<NioSocketChannel> 管道工厂 = new ChannelInitializer<NioSocketChannel>() {
         @Override
         protected void initChannel(NioSocketChannel nioSocketChannel) {
-            客户端输出.控制台("子线程处理读写线程切换到本线程！");
+            输出.客户端.控制台("子线程处理读写线程切换到本线程！");
         }
     };
 
@@ -56,13 +50,13 @@ public class K2_客户端 {
         GenericFutureListener<Future<? super Void>> 连接服务器监听器 = 连接结果 -> {
             EventLoopGroup group = 启动器.config().group();
             if (连接结果.isSuccess()) {
-                客户端输出.控制台("连接成功！");
+                输出.客户端.控制台("连接成功！");
             } else if (retry == 0) {
-                客户端输出.控制台("连接不上，全局退出！");
+                输出.客户端.控制台("连接不上，全局退出！");
                 group.shutdownGracefully();
             } else {
                 int order = MAX_RETRY - retry;
-                客户端输出.控制台输出异常(new Date() + ": 连接失败，第" + ++order + "次重连……");
+                输出.客户端.控制台输出异常(new Date() + ": 连接失败，第" + ++order + "次重连……");
                 // 重连
                 group.schedule(() -> 失败重试重连逻辑(启动器, host, port, retry - 1, delay), delay, TimeUnit.SECONDS);
             }

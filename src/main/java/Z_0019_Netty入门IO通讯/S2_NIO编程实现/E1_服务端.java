@@ -1,6 +1,6 @@
 package Z_0019_Netty入门IO通讯.S2_NIO编程实现;
 
-import Z_utils.服务端输出;
+import Z_utils.输出;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
@@ -52,7 +52,7 @@ public class E1_服务端 {
     private static void 接待服务(ServerSocketChannel 服务端通道, Selector 选择器, Selector 读选择器) {
         ThreadUtil.execute(() -> {
             String 客户端ip = null;
-            服务端输出.控制台("启动服务器, 等待客户端接入.......");
+            输出.服务端.控制台("启动服务器, 等待客户端接入.......");
             try {
                 注册服务端接收请求钩子(选择器, 服务端通道);
                 while (true) {
@@ -133,7 +133,7 @@ public class E1_服务端 {
 
     private static String 打印客户端ip(SocketChannel 客户端请求) throws IOException {
         String 客户端ip = 客户端请求.getLocalAddress().toString();
-        服务端输出.控制台("客户端{}接入.", 客户端ip);
+        输出.服务端.控制台("客户端{}接入.", 客户端ip);
         return 客户端ip;
     }
 
@@ -147,7 +147,7 @@ public class E1_服务端 {
             可写盒子.flip();
             // 反转后重新赋值
             ByteBuffer 可读盒子 = 可写盒子;
-            服务端输出.控制台("从客户端发送过来的消息: {}", new String(可读盒子.array()).trim());
+            输出.服务端.控制台("从客户端发送过来的消息: {}", new String(可读盒子.array()).trim());
         } finally {
             读选择器钩子迭代器.remove();
             // 重新注册为 读选择器
@@ -157,7 +157,7 @@ public class E1_服务端 {
 
     private static void 输出异常(String 客户端ip, Exception e) {
         if (StrUtil.containsAnyIgnoreCase(ExceptionUtil.getMessage(e), "远程主机强迫关闭了一个现有的连接")) {
-            服务端输出.控制台("客户端[{}]断开连接.", 客户端ip);
+            输出.服务端.控制台("客户端[{}]断开连接.", 客户端ip);
         } else {
             throw new RuntimeException(e);
         }

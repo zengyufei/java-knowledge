@@ -4,6 +4,7 @@ import Z_utils.输出;
 
 /**
  * 描述：
+ *
  * @author zengyufei
  */
 public abstract class R1_冲泡饮料 {
@@ -17,12 +18,12 @@ public abstract class R1_冲泡饮料 {
     }
 
     final private void 倒热水到杯子() {
-        输出.当前方法名();
+        输出.当前方法简单名();
     }
 
 
     final private void 烧水() {
-        输出.当前方法名();
+        输出.当前方法简单名();
     }
 
     abstract void 加主料();

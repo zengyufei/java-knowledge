@@ -1,6 +1,6 @@
 package Z_0019_Netty入门IO通讯.S5_Netty双向通讯.P1_处理链;
 
-import Z_utils.客户端输出;
+import Z_utils.输出;
 import cn.hutool.core.date.DateUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,7 +13,7 @@ public class P2_客户端逻辑处理器 extends ChannelInboundHandlerAdapter {
     static boolean isEnd = false;
 
     public P2_客户端逻辑处理器() {
-        客户端输出.控制台("实例化 P4_客户端逻辑处理器.java");
+        输出.客户端.控制台("实例化 P4_客户端逻辑处理器.java");
     }
 
     /**
@@ -26,7 +26,7 @@ public class P2_客户端逻辑处理器 extends ChannelInboundHandlerAdapter {
         // 2: 填充要发送的数据
         要发送的数据.writeBytes("你好，服务器！".getBytes(StandardCharsets.UTF_8));
         上下文.channel().writeAndFlush(要发送的数据);
-        客户端输出.控制台(DateUtil.now() + ": 客户端发送数据");
+        输出.客户端.控制台(DateUtil.now() + ": 客户端发送数据");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class P2_客户端逻辑处理器 extends ChannelInboundHandlerAdapter {
 
     private void 处理接收的消息(ByteBuf 消息) {
         ByteBuf 接收的数据 = 消息;
-        客户端输出.控制台("来自服务端的消息：" + 接收的数据.toString(StandardCharsets.UTF_8));
+        输出.客户端.控制台("来自服务端的消息：" + 接收的数据.toString(StandardCharsets.UTF_8));
     }
 
     private void 回复对方(ChannelHandlerContext 上下文) {

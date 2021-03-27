@@ -5,7 +5,7 @@ import Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议.P3_
 import Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议.P3_实现层.P7_登录响应数据包;
 import Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议.P4_应用层.P8_编码;
 import Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议.P4_应用层.P9_解码;
-import Z_utils.客户端输出;
+import Z_utils.输出;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
@@ -22,7 +22,7 @@ public class P2_客户端逻辑处理器 extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext 上下文) throws Exception {
-        客户端输出.控制台(new Date() + ": 我要准备登录了!");
+        输出.客户端.控制台(new Date() + ": 我要准备登录了!");
         P6_登录请求数据包 登录请求数据包 = 构建错误登录请求包();
         发送登录请求包(上下文, 登录请求数据包);
     }
@@ -49,9 +49,9 @@ public class P2_客户端逻辑处理器 extends ChannelInboundHandlerAdapter {
 
     private void 打印日志(boolean result) {
         if (!result) {
-            客户端输出.控制台(new Date() + ": 解析后说我因为密码错误重新登录");
+            输出.客户端.控制台(new Date() + ": 解析后说我因为密码错误重新登录");
         } else {
-            客户端输出.控制台(new Date() + ": 解析后, 我终于登录成功啦!");
+            输出.客户端.控制台(new Date() + ": 解析后, 我终于登录成功啦!");
         }
     }
 
@@ -81,7 +81,7 @@ public class P2_客户端逻辑处理器 extends ChannelInboundHandlerAdapter {
 
     private boolean 核对登录是否成功(P7_登录响应数据包 解码后的数据) {
         P7_登录响应数据包 登录响应数据包 = 解码后的数据;
-        客户端输出.控制台("收到服务端返回消息, {}", JSONObject.toJSONString(登录响应数据包));
+        输出.客户端.控制台("收到服务端返回消息, {}", JSONObject.toJSONString(登录响应数据包));
         String 消息内容 = 登录响应数据包.get消息();
         String 是否成功 = 登录响应数据包.get是否成功();
         return StrUtil.equals(是否成功, "成功");

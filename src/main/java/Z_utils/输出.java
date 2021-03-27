@@ -4,12 +4,15 @@ import cn.hutool.core.util.StrUtil;
 
 public class 输出 {
 
-    public static void 当前方法名() {
+    public static final 输出控制台 服务端 = 输出控制台.valueOf("服务端");
+    public static final 输出控制台 客户端 = 输出控制台.valueOf("客户端");
+
+    public static void 当前方法简单名() {
         String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
         System.out.println(methodName);
     }
 
-    public static void 当前方法名(String suffix) {
+    public static void 当前方法简单名(String suffix) {
         StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[2];
         String tr = stackTraceElement.getMethodName() + " " + suffix;
         System.out.println(tr);
@@ -37,5 +40,6 @@ public class 输出 {
         String tr = StrUtil.subAfter(stackTraceElement.getClassName(), ".", true);
         System.out.println(tr);
     }
+
 
 }

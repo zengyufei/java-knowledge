@@ -5,7 +5,7 @@ import Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议.P3_
 import Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议.P3_实现层.P7_登录响应数据包;
 import Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议.P4_应用层.P8_编码;
 import Z_0019_Netty入门IO通讯.S8_Netty实现登录.P0_简易通讯协议.P4_应用层.P9_解码;
-import Z_utils.服务端输出;
+import Z_utils.输出;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
@@ -52,7 +52,7 @@ public class P1_服务端逻辑处理器 extends ChannelInboundHandlerAdapter {
 
     private boolean 核对登录信息(P6_登录请求数据包 解码后的数据) {
         P6_登录请求数据包 登录请求数据包 = 解码后的数据;
-        服务端输出.控制台("接收到来自客户端连接时发送的数据：" + JSONObject.toJSONString(登录请求数据包));
+        输出.服务端.控制台("接收到来自客户端连接时发送的数据：" + JSONObject.toJSONString(登录请求数据包));
         String 姓名 = 登录请求数据包.get姓名();
         String 密码 = 登录请求数据包.get密码();
         String 用户名 = 登录请求数据包.get用户名();
