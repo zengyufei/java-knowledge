@@ -6,46 +6,44 @@
 
     <groupId>com.zyf.java-knowledge</groupId>
     <artifactId>java-knowledge</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
+
+    <packaging>pom</packaging>
 
     <name>曾玉飞的JAVA个人知识库</name>
+    <modules>
+        <module>Z_utils</module>
+        <module>Z_0001_设计模式</module>
+        <module>Z_0002_多线程</module>
+        <module>Z_0019_Netty入门IO通讯</module>
+        <!--        <module>Z_0050_SpringCloud入门</module>-->
+    </modules>
 
     <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <!-- 本系统 版本 -->
+        <!-- 自 Maven 3.5.0-beta-1 开始，可以使用 ${revision}, ${sha1} and/or ${changelist} 这样的变量作为版本占位符。-->
+        <!-- 只能命名成revision，不可以更改成其他命名；-->
+        <revision>1.0.0</revision>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>4.3.0</version>
+            <version>5.8.26</version>
         </dependency>
-
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.6.Final</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.47</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>3.2.7</version>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.6</version>
+            <version>1.18.32</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zyf.java-knowledge</groupId>
+            <artifactId>Z_utils</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 
@@ -56,7 +54,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.13.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
