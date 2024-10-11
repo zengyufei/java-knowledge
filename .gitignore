@@ -1,36 +1,38 @@
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
+# Compiled class file
+*.class
 
-# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
-!/.mvn/wrapper/maven-wrapper.jar
+# Log file
+*.trc
+*.dmp
+*.log
+*.sqlite
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+target/*.jar
+*.war
+*.nar
+*.ear
+target/*.zip
+*.tar.gz
+*.rar
 
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.logs
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+.idea/
+remote_src/
+javacore.*.txt
 *.iml
-*.ipr
+.factorypath
+/fsjt-client/unpackage
+**/target
+**/target/**
 
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+rebel.xml
