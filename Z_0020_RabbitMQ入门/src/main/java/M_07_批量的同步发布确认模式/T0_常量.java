@@ -10,5 +10,5 @@ public interface T0_常量 {
 
      String 密码 = "root";
 
-     String 队列名称 = "M_06_batchConfirmSelect";
+     String 队列名称 = "M_07_batchConfirmSelect";
 }
