@@ -10,5 +10,5 @@ public interface G0_常量 {
 
      String 密码 = "root";
 
-     String 队列名称 = "M_03_durable";
+     String 队列名称 = "M_04_durable";
 }

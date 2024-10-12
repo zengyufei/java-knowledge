@@ -1,5 +1,6 @@
 package M_03_消息确认;
 
+import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 
@@ -35,9 +36,8 @@ public class E2_消费者 {
             boolean autoAck = false;
             信道.basicConsume(E0_常量.队列名称, autoAck,
                     (consumerTag, message) -> {
-                        System.out.println(E2_消费者.class.getSimpleName() + " =" + 信道.hashCode());
                         final String val = new String(message.getBody(), StandardCharsets.UTF_8);
-                        System.out.println(E2_消费者.class.getSimpleName() + "接收到消息: " + val);
+                        Console.log(E2_消费者.class.getSimpleName() + "接收到消息: " + val);
                         try {
                             TimeUnit.SECONDS.sleep(5);
                         } catch (InterruptedException e) {
@@ -48,10 +48,10 @@ public class E2_消费者 {
                          * 消息的标志 tag
                          * 是否批量确认 true-是 false-否
                          */
-                        System.out.println(E2_消费者.class.getSimpleName() + "消费完毕: " + val);
+                        Console.log(E2_消费者.class.getSimpleName() + "消费完毕: " + val);
                         信道.basicAck(message.getEnvelope().getDeliveryTag(), false);
                     },
-                    consumerTag -> System.out.println(E2_消费者.class.getSimpleName() + "消息消费被中断,取消消费消息"));
+                    consumerTag -> Console.log(E2_消费者.class.getSimpleName() + "消息消费被中断,取消消费消息"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,24 +62,4 @@ public class E2_消费者 {
     }
 
 
-    public static void 关闭() {
-        // 9.关闭信道
-        if (信道 != null && 信道.isOpen()) {
-            try {
-                System.out.println(E2_消费者.class.getSimpleName() + " 关闭=" + 信道.hashCode());
-                信道.close();
-            } catch (IOException | TimeoutException e) {
-                e.printStackTrace();
-            }
-        }
-        final Connection 连接 = 信道.getConnection();
-        // 10.关闭连接
-        if (连接 != null && 连接.isOpen()) {
-            try {
-                连接.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

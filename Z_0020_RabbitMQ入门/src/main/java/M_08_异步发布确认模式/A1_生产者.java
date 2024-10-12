@@ -1,5 +1,6 @@
 package M_08_异步发布确认模式;
 
+import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConfirmCallback;
 
@@ -18,8 +19,8 @@ public class A1_生产者 {
     }
 
     public static void 生产消息发送mq() {
-        System.out.println("======================================================");
-        System.out.println(A1_生产者.class.getSimpleName() + " =" + 信道.hashCode());
+        Console.log("======================================================");
+        Console.log(A1_生产者.class.getSimpleName() + " =" + 信道.hashCode());
         try {
             // 开启发布确认
             信道.confirmSelect();
@@ -36,12 +37,12 @@ public class A1_生产者 {
 
             // 消息确认成功回调
             ConfirmCallback confirmCallback = (deliveryTag, multiple) -> {
-                System.out.println("确认的消息: " + deliveryTag);
+                Console.log("确认的消息: " + deliveryTag);
             };
 
             // 消息确认失败回调
             ConfirmCallback nackCallback = (deliveryTag, multiple) -> {
-                System.out.println("未确认的消息: " + deliveryTag);
+                Console.log("未确认的消息: " + deliveryTag);
             };
 
             /**
@@ -66,7 +67,7 @@ public class A1_生产者 {
             }
 
             long end = System.currentTimeMillis();
-            System.out.println(MESSAGE_COUNT + "个消息耗时: " + (end - start) + "ms");
+            Console.log(MESSAGE_COUNT + "个消息耗时: " + (end - start) + "ms");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

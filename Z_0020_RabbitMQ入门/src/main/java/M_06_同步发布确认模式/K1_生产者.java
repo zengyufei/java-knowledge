@@ -1,5 +1,6 @@
 package M_06_同步发布确认模式;
 
+import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 
 import java.io.IOException;
@@ -15,8 +16,8 @@ public class K1_生产者 {
     }
 
     public static void 生产消息发送mq() {
-        System.out.println("======================================================");
-        System.out.println(K1_生产者.class.getSimpleName() + " =" + 信道.hashCode());
+        Console.log("======================================================");
+        Console.log(K1_生产者.class.getSimpleName() + " =" + 信道.hashCode());
         try {
             // 开启发布确认
             信道.confirmSelect();
@@ -46,12 +47,12 @@ public class K1_生产者 {
                 // 服务端返回false或超时时间内未返回,生产者可以重发消息
                 boolean flag = 信道.waitForConfirms();
                 if (flag) {
-                    System.out.println(message + ":    发送成功!");
+                    Console.log(message + ":    发送成功!");
                 }
             }
 
             long end = System.currentTimeMillis();
-            System.out.println(MESSAGE_COUNT + "个消息耗时: " + (end - start) + "ms");
+            Console.log(MESSAGE_COUNT + "个消息耗时: " + (end - start) + "ms");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

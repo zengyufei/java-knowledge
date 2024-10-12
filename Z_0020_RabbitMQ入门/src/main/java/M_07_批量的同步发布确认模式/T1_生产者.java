@@ -1,5 +1,6 @@
 package M_07_批量的同步发布确认模式;
 
+import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 
 import java.io.IOException;
@@ -15,8 +16,8 @@ public class T1_生产者 {
     }
 
     public static void 生产消息发送mq() {
-        System.out.println("======================================================");
-        System.out.println(T1_生产者.class.getSimpleName() + " =" + 信道.hashCode());
+        Console.log("======================================================");
+        Console.log(T1_生产者.class.getSimpleName() + " =" + 信道.hashCode());
         try {
             // 开启发布确认
             信道.confirmSelect();
@@ -48,12 +49,12 @@ public class T1_生产者 {
                 // 每发送 batchSize 条消息确认一次
                 if (i % batchSize == 0) {
                     信道.waitForConfirms();
-                    System.out.println("确认一次");
+                    Console.log("确认一次");
                 }
             }
 
             long end = System.currentTimeMillis();
-            System.out.println(MESSAGE_COUNT + "个消息耗时: " + (end - start) + "ms");
+            Console.log(MESSAGE_COUNT + "个消息耗时: " + (end - start) + "ms");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

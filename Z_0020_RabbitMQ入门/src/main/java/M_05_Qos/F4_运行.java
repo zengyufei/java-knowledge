@@ -1,6 +1,8 @@
 package M_05_Qos;
 
 
+import cn.hutool.core.lang.Console;
+
 import java.util.concurrent.TimeUnit;
 
 public class F4_运行 {
@@ -17,13 +19,13 @@ public class F4_运行 {
             F1_生产者.生产消息发送mq(消息);
         }
 
-        System.out.println("结束");
+        Console.log("结束");
 //
 //        F1_生产者.关闭();
 //        F2_消费者.关闭();
 //        F3_消费者.关闭();
 //
-//        System.out.println("全部关闭");
+//        Console.log("全部关闭");
 
     }
 }

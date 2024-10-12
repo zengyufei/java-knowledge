@@ -1,5 +1,6 @@
 package M_09_异步未确认消息处理;
 
+import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConfirmCallback;
 
@@ -20,8 +21,8 @@ public class B1_生产者 {
     }
 
     public static void 生产消息发送mq() {
-        System.out.println("======================================================");
-        System.out.println(B1_生产者.class.getSimpleName() + " =" + 信道.hashCode());
+        Console.log("======================================================");
+        Console.log(B1_生产者.class.getSimpleName() + " =" + 信道.hashCode());
 
         /**
          * 线程安全有序的哈希表,适用于高并发的情况下
@@ -54,14 +55,14 @@ public class B1_生产者 {
                     headMap.clear();
                 }
                 skipListMap.remove(deliveryTag);
-                System.out.println("确认的消息: " + deliveryTag);
+                Console.log("确认的消息: " + deliveryTag);
             };
 
             // 消息确认失败回调
             ConfirmCallback nackCallback = (deliveryTag, multiple) -> {
                 // 3.获取未确认的消息
                 String message = skipListMap.get(deliveryTag);
-                System.out.println("未确认的消息: " + deliveryTag);
+                Console.log("未确认的消息: " + deliveryTag + "  msg: " + message);
             };
 
             /**
@@ -89,12 +90,12 @@ public class B1_生产者 {
             }
 
             long end = System.currentTimeMillis();
-            System.out.println("发布" + MESSAGE_COUNT + "个异步发布消息耗时: " + (end - start) + "ms");
-            System.out.println(skipListMap.size());
+            Console.log("发布" + MESSAGE_COUNT + "个异步发布消息耗时: " + (end - start) + "ms");
+            Console.log(skipListMap.size());
             for (Map.Entry<Long, String> entry : skipListMap.entrySet()) {
                 final Long key = entry.getKey();
                 final String value = entry.getValue();
-                System.out.println("key:" + key + " value:" + value);
+                Console.log("key:" + key + " value:" + value);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

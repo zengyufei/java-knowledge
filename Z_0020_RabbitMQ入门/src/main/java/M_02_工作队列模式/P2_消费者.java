@@ -1,5 +1,6 @@
 package M_02_工作队列模式;
 
+import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 
@@ -33,8 +34,8 @@ public class P2_消费者 {
              * @param cancelCallback    取消消息后的回调
              */
             信道.basicConsume(P0_常量.队列名称, true,
-                    (consumerTag, message) -> System.out.println(P2_消费者.class.getSimpleName() + "接收到消息: " + new String(message.getBody(), StandardCharsets.UTF_8)),
-                    consumerTag -> System.out.println(P2_消费者.class.getSimpleName() + "消息消费被中断,取消消费消息"));
+                    (consumerTag, message) -> Console.log(P2_消费者.class.getSimpleName() + "接收到消息: " + new String(message.getBody(), StandardCharsets.UTF_8)),
+                    consumerTag -> Console.log(P2_消费者.class.getSimpleName() + "消息消费被中断,取消消费消息"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,9 +44,9 @@ public class P2_消费者 {
     public static void main(String[] args) throws IOException {
         // 接收消息
         信道.basicConsume(P0_常量.队列名称, true, (customerTag, message) -> {
-            System.out.println(P2_消费者.class.getSimpleName() + "接收到消息: " + new String(message.getBody(), StandardCharsets.UTF_8));
+            Console.log(P2_消费者.class.getSimpleName() + "接收到消息: " + new String(message.getBody(), StandardCharsets.UTF_8));
         }, (customerTag) -> {
-            System.out.println("消息消费被中断,取消消费消息");
+            Console.log("消息消费被中断,取消消费消息");
         });
     }
 

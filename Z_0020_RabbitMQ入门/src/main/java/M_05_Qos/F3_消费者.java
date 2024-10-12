@@ -1,5 +1,6 @@
 package M_05_Qos;
 
+import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 
@@ -37,9 +38,9 @@ public class F3_消费者 {
             boolean autoAck = false;
             信道.basicConsume(F0_常量.队列名称, autoAck,
                     (consumerTag, message) -> {
-                        System.out.println(F3_消费者.class.getSimpleName() + " =" + 信道.hashCode());
+                        Console.log(F3_消费者.class.getSimpleName() + " =" + 信道.hashCode());
                         final String val = new String(message.getBody(), StandardCharsets.UTF_8);
-                        System.out.println(F3_消费者.class.getSimpleName() + "接收到消息: " + val);
+                        Console.log(F3_消费者.class.getSimpleName() + "接收到消息: " + val);
                         try {
                             TimeUnit.SECONDS.sleep(1);
                         } catch (InterruptedException e) {
@@ -50,10 +51,10 @@ public class F3_消费者 {
                          * 消息的标志 tag
                          * 是否批量确认 true-是 false-否
                          */
-                        System.out.println(F3_消费者.class.getSimpleName() + "消费完毕: " + val);
+                        Console.log(F3_消费者.class.getSimpleName() + "消费完毕: " + val);
                         信道.basicAck(message.getEnvelope().getDeliveryTag(), false);
                     },
-                    consumerTag -> System.out.println(F3_消费者.class.getSimpleName() + "消息消费被中断,取消消费消息"));
+                    consumerTag -> Console.log(F3_消费者.class.getSimpleName() + "消息消费被中断,取消消费消息"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,7 +69,7 @@ public class F3_消费者 {
         // 9.关闭信道
         if (信道 != null && 信道.isOpen()) {
             try {
-                System.out.println(F3_消费者.class.getSimpleName() + " 关闭=" + 信道.hashCode());
+                Console.log(F3_消费者.class.getSimpleName() + " 关闭=" + 信道.hashCode());
                 信道.close();
             } catch (IOException | TimeoutException e) {
                 e.printStackTrace();

@@ -1,5 +1,6 @@
 package M_02_工作队列模式;
 
+import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 
@@ -36,7 +37,7 @@ public class P1_生产者 {
              * @param body 消息体
              */
             信道.basicPublish("", P0_常量.队列名称, null, 消息内容.getBytes(StandardCharsets.UTF_8));
-            System.out.println("消息发送成功!");
+            Console.log("消息发送成功!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,7 +59,7 @@ public class P1_生产者 {
             // 发送消息
             信道.basicPublish("", P0_常量.队列名称, null, message.getBytes(StandardCharsets.UTF_8));
 
-            System.out.println("发送消息: " + message);
+            Console.log("发送消息: " + message);
         }
     }
 

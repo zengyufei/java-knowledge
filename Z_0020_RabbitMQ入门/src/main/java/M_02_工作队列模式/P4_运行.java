@@ -1,6 +1,8 @@
 package M_02_工作队列模式;
 
 
+import cn.hutool.core.lang.Console;
+
 import java.util.concurrent.TimeUnit;
 
 public class P4_运行 {
@@ -19,13 +21,13 @@ public class P4_运行 {
             TimeUnit.SECONDS.sleep(1);
         }
 
-        System.out.println("结束");
+        Console.log("结束");
 
         P1_生产者.关闭();
         P2_消费者.关闭();
         P3_消费者.关闭();
 
-        System.out.println("全部关闭");
+        Console.log("全部关闭");
 
     }
 }

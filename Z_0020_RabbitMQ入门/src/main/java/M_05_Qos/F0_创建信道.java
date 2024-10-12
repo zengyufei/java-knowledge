@@ -2,6 +2,7 @@ package M_05_Qos;
 
 
 import M_05_Qos.F0_常量;
+import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -31,7 +32,7 @@ public class F0_创建信道 {
         try {
             // 5.创建连接
             连接 = 连接工厂.newConnection();
-            System.out.println(F0_创建信道.class.getSimpleName() + " =" + 连接.hashCode());
+            Console.log(F0_创建信道.class.getSimpleName() + " =" + 连接.hashCode());
         } catch (IOException | TimeoutException e) {
             System.err.println("创建连接失败: []" + e.getMessage() + "]");
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package M_03_消息确认;
 
+import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 
@@ -17,8 +18,7 @@ public class E1_生产者 {
     }
 
     public static void 生产消息发送mq(String 消息内容) {
-        System.out.println("======================================================");
-        System.out.println(E1_生产者.class.getSimpleName() + " =" + 信道.hashCode());
+        Console.log("======================================================");
         try {
             // 7.声明队列
             /**
@@ -38,7 +38,7 @@ public class E1_生产者 {
              * @param body 消息体
              */
             信道.basicPublish("", E0_常量.队列名称, null, 消息内容.getBytes(StandardCharsets.UTF_8));
-            System.out.println(消息内容 + ":    发送成功!");
+            Console.log(消息内容 + ":    发送成功!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,7 +57,7 @@ public class E1_生产者 {
             // 发送消息
             信道.basicPublish("", E0_常量.队列名称, null, message.getBytes(StandardCharsets.UTF_8));
 
-            System.out.println("发送消息: " + message);
+            Console.log("发送消息: " + message);
         }
         关闭();
     }
