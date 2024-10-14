@@ -1,10 +1,8 @@
 package M_utils;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
-import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.ConfirmListener;
-import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -213,33 +211,33 @@ public class MqHelper {
         newConfig.setType("1");
         final MqChannelFactory mqChannelFactory = getMqChannelFactory(newConfig);
 //        final Connection connection = mqChannelFactory.getConnection();
-        final Channel consumeChannel = mqChannelFactory.create();
+        final Channel consumeChannel = mqChannelFactory.createChannel();
         // 建立消费者
-//            Consumer consumer = new DefaultConsumer(consumeChannel) {
-//
-//                @Override
-//                public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
-//                                           byte[] body) {
-//                    long deliveryTag = envelope.getDeliveryTag();
-//                    ConsumeAction consumeAction;
-//                    try {
-//                        String message = new String(body, StandardCharsets.UTF_8);
-//                        consumeAction = successMessage.apply(consumeChannel, message);
-//                        // 消息丢到死信 或 从死信直接丢弃
-//                        if (consumeAction == ConsumeAction.ACCEPT) {
-//                            consumeChannel.basicAck(deliveryTag, false);
-//                        }
-//                        else {
-//                            consumeChannel.basicNack(deliveryTag, false, consumeAction == ConsumeAction.RETRY);
-//                        }
-//                    } catch (Exception e) {
-//                        log.error("异常: {}", ExceptionUtil.stacktraceToString(e));
-////                        throw new RuntimeException(e);
-//                    }
-//                }
-//            };
+        Consumer consumer = new DefaultConsumer(consumeChannel) {
+
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
+                                       byte[] body) {
+                long deliveryTag = envelope.getDeliveryTag();
+                ConsumeAction consumeAction;
+                try {
+                    String message = new String(body, StandardCharsets.UTF_8);
+                    consumeAction = successMessage.apply(consumeChannel, message);
+                    // 消息丢到死信 或 从死信直接丢弃
+                    if (consumeAction == ConsumeAction.ACCEPT) {
+                        consumeChannel.basicAck(deliveryTag, false);
+                    }
+                    else {
+                        consumeChannel.basicNack(deliveryTag, false, consumeAction == ConsumeAction.RETRY);
+                    }
+                } catch (Exception e) {
+                    log.error("异常: {}", ExceptionUtil.stacktraceToString(e));
+//                        throw new RuntimeException(e);
+                }
+            }
+        };
         // 从左到右参数意思分别是：队列名称、是否自动确认，消费者
-        consumeChannel.basicConsume(queueName, false, new CustomConsumer(mqChannelFactory, consumeChannel, queueName, successMessage));
+        consumeChannel.basicConsume(queueName, false, consumer);
     }
 
     private static String getName(String exchangeName, String routingKey, Boolean isDelay, String queueName) {
@@ -292,7 +290,7 @@ public class MqHelper {
 
     private static Channel getChannel(MqConfig mqConfig) throws Exception {
         final MqChannelFactory factory = getMqChannelFactory(mqConfig);
-        return factory.create();
+        return factory.createChannel();
 //        return channelMap.computeIfAbsent(mqConfig, k -> {
 //            try {
 //                return factory.create();
@@ -367,4 +365,14 @@ public class MqHelper {
         return msgCount;
     }
 
+    public static void 重连(MqConfig mqConfig) {
+        while (true) {
+            try {
+                getMqChannelFactory(mqConfig).reConnect();
+                break;
+            } catch (Exception e) {
+                log.warn(ExceptionUtil.stacktraceToString(e));
+            }
+        }
+    }
 }

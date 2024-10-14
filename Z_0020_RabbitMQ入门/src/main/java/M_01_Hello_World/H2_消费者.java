@@ -1,6 +1,5 @@
 package M_01_Hello_World;
 
-import M_10_交换机_队列_绑定.W0_常量;
 import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.*;
 
@@ -42,10 +41,10 @@ public class H2_消费者 {
 
     private static Channel 创建信道() throws IOException, TimeoutException {
         ConnectionFactory 连接工厂 = new ConnectionFactory();
-        连接工厂.setHost(W0_常量.HOST);
-        连接工厂.setPort(W0_常量.端口);
-        连接工厂.setUsername(W0_常量.账号);
-        连接工厂.setPassword(W0_常量.密码);
+        连接工厂.setHost(H0_常量.HOST);
+        连接工厂.setPort(H0_常量.端口);
+        连接工厂.setUsername(H0_常量.账号);
+        连接工厂.setPassword(H0_常量.密码);
 
         Connection 连接 = 连接工厂.newConnection();
         Channel 信道 = 连接.createChannel();

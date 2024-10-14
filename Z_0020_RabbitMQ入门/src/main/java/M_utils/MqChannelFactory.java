@@ -1,5 +1,6 @@
 package M_utils;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -53,41 +54,68 @@ public class MqChannelFactory {
         connectionFactory.setShutdownTimeout(0);
 
         connection = connectionFactory.newConnection();
-        if (mqConfig.getType().equals("0")) {
-            // 监听连接关闭事件
-            connection.addShutdownListener(cause -> {
-                System.out.println("Connection closed, attempting to reconnect...");
-                try {
-                    reconnect();
-                } catch (IOException | TimeoutException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+    }
+
+    public Channel resetChannel() {
+        reConnect();
+        return resetCreateChannel();
+    }
+
+    public void reConnect() {
+        try {
+            closeResources(); // 关闭当前连接
+        } catch (Exception e) {
+            log.warn(ExceptionUtil.stacktraceToString(e));
+        }
+        try {
+            connect(); // 尝试重新连接
+        } catch (Exception e) {
+            log.warn(ExceptionUtil.stacktraceToString(e));
         }
     }
 
-    public void reconnect() throws IOException, TimeoutException {
-        closeConnection(); // 关闭当前连接
-        connect(); // 尝试重新连接
+    private void closeResources() {
+        closeChannels();
+        closeConnection();
+    }
+
+    private Channel resetCreateChannel() {
+        while (true) {
+            try {
+                return createChannel();
+            } catch (Exception e) {
+                log.warn(ExceptionUtil.stacktraceToString(e));
+            }
+        }
     }
 
     private void closeConnection() {
+        try {
+            if (connection != null && connection.isOpen()) {
+                connection.close();
+            }
+        } catch (Exception e) {
+            log.warn(ExceptionUtil.stacktraceToString(e));
+        } finally {
+            connection = null;
+        }
+    }
+
+    private void closeChannels() {
         try {
             for (Channel channel : channels) {
                 if (channel != null && channel.isOpen()) {
                     channel.close();
                 }
             }
-            channels.clear();
-            if (connection != null && connection.isOpen()) {
-                connection.close();
-            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            log.warn(ExceptionUtil.stacktraceToString(e));
+        } finally {
+            channels.clear();
         }
     }
 
-    public Channel create() throws Exception {
+    public Channel createChannel() throws Exception {
         log.trace("在对象池中创建 Channel 对象");
         final Channel channel = getChannel();
 

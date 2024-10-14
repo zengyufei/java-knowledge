@@ -5,6 +5,7 @@ import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import com.rabbitmq.client.AlreadyClosedException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -92,7 +93,12 @@ public class TestMqHelper1 {
                     });
                 } catch (Exception e) {
                     log.error(ExceptionUtil.stacktraceToString(e));
-                     throw new RuntimeException(e);
+                    if (e instanceof AlreadyClosedException) {
+                        MqHelper.重连(mqConfig);
+                    }
+                    else {
+                        throw new RuntimeException(e);
+                    }
                 }
                 try {
                     TimeUnit.MILLISECONDS.sleep(1000);

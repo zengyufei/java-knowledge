@@ -1,7 +1,6 @@
 package M_05_Qos;
 
 
-import M_05_Qos.F0_常量;
 import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
