@@ -35,7 +35,6 @@ String 临时队列名称=信道.queueDeclare().getQueue();
 信道.queueBind(临时队列名称, 交换机名称, 路由键);
 ```
 
-
 ### Fanout
 
 Fanout 这种类型非常简单。它是将接收到的所有消息**广播**到它知道的所有队列中。

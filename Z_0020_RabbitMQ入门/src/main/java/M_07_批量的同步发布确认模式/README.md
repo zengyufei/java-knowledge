@@ -7,6 +7,7 @@
 而且这种解决方案仍然是同步的，因此会阻止消息的发布。
 
 ### 改造
+
 ```java
 // 原本单条确认 boolean flag = 信道.waitForConfirms();
 

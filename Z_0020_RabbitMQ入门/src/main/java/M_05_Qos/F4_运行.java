@@ -3,8 +3,6 @@ package M_05_Qos;
 
 import cn.hutool.core.lang.Console;
 
-import java.util.concurrent.TimeUnit;
-
 public class F4_运行 {
 
     public static void main(String[] args) throws InterruptedException {

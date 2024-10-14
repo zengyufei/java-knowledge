@@ -6,7 +6,6 @@ import com.rabbitmq.client.ConfirmCallback;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 public class A1_生产者 {

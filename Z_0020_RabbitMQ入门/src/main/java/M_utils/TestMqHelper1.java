@@ -5,7 +5,6 @@ import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import com.rabbitmq.client.AlreadyClosedException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -75,7 +74,7 @@ public class TestMqHelper1 {
                     .title("生产者")
                     .changeName("consumer")
                     .queueName("consumer_queue")
-                    .deadConfig(DeadConfig.of().changeName("consumer_dead").queueName("consumer_dead_queue").build())
+                    .deadConfig(MqConfig.DeadConfig.of().changeName("consumer_dead").queueName("consumer_dead_queue").build())
                     .build();
             while (!isBreak.get()) {
                 final String now = DateUtil.now();
@@ -93,12 +92,7 @@ public class TestMqHelper1 {
                     });
                 } catch (Exception e) {
                     log.error(ExceptionUtil.stacktraceToString(e));
-                    if (e instanceof AlreadyClosedException) {
-                        MqHelper.重连(mqConfig);
-                    }
-                    else {
-                        throw new RuntimeException(e);
-                    }
+                    throw new RuntimeException(e);
                 }
                 try {
                     TimeUnit.MILLISECONDS.sleep(1000);

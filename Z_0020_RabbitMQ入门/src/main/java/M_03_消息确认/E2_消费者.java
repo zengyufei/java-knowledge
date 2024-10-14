@@ -2,12 +2,10 @@ package M_03_消息确认;
 
 import cn.hutool.core.lang.Console;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class E2_消费者 {
 

@@ -2,7 +2,6 @@ package M_14_死信队列最大长度;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Console;
-import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -25,7 +24,7 @@ public class V1_生产者 {
          * @param body 消息体
          */
         for (int i = 0; i < 5; i++) {
-            final String 消息内容 = "work " + i  + " " + DateUtil.current();
+            final String 消息内容 = "work " + i + " " + DateUtil.current();
             信道.basicPublish(V0_常量.普通交换机名称, V0_常量.普通路由键, null, 消息内容.getBytes(StandardCharsets.UTF_8));
             Console.log("交换机: {} 消息发送成功!", V0_常量.普通交换机名称);
         }

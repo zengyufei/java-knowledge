@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
 public class W2_消费者 {
-   static final String simpleName = W2_消费者.class.getSimpleName();
+    static final String simpleName = W2_消费者.class.getSimpleName();
 
     /**
      * 消费消息
@@ -31,7 +31,7 @@ public class W2_消费者 {
 
         // 绑定交换机与队列
         信道.queueBind(临时队列名称, W0_常量.交换机名称, W0_常量.路由键);
-        Console.log(simpleName+"等待接受消息...");
+        Console.log(simpleName + "等待接受消息...");
 
         /**
          * 接收消息
@@ -41,9 +41,9 @@ public class W2_消费者 {
          * @param cancelCallback    取消消息后的回调
          */
         信道.basicConsume(临时队列名称, true, (consumerTag, message) -> {
-            Console.log(simpleName+"接收到消息: " + new String(message.getBody(), StandardCharsets.UTF_8));
+            Console.log(simpleName + "接收到消息: " + new String(message.getBody(), StandardCharsets.UTF_8));
             System.exit(0);
-        }, consumerTag -> Console.log(simpleName+"消息消费被中断,取消消费消息"));
+        }, consumerTag -> Console.log(simpleName + "消息消费被中断,取消消费消息"));
         // 对消息进行阻断不在往下运行
         System.in.read();
 

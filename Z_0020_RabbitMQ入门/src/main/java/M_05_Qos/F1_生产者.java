@@ -53,7 +53,7 @@ public class F1_生产者 {
         信道.queueDeclare(F0_常量.队列名称, false, false, false, null);
 
         for (int i = 0; i < 6; i++) {
-            String message = (char) (i+(int) 'a') + "";
+            String message = (char) (i + (int) 'a') + "";
             // 发送消息
             信道.basicPublish("", F0_常量.队列名称, null, message.getBytes(StandardCharsets.UTF_8));
 

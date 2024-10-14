@@ -1,5 +1,6 @@
 package M_utils;
 
+import com.rabbitmq.client.BuiltinExchangeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,53 +16,48 @@ import java.util.Objects;
 @Builder(builderMethodName = "of")
 public class MqConfig {
 
-	private String title;
+    private String title;
 
-	private String type;
+    private String type;
 
-	private String changeName;
+    private String changeName;
 
-	private String queueName;
+    private String queueName;
 
-	private String routingKey;
+    private String routingKey;
 
-	private String expiration;
+    private String expiration;
 
-	private Boolean durable;
+    private Boolean durable;
 
-	private ExchangeType exchangeType;
+    private BuiltinExchangeType exchangeType;
 
-	private Long ttl;
+    private Long ttl;
 
-	private Long max;
+    private Long max;
 
-	private DeadConfig deadConfig;
+    private DeadConfig deadConfig;
 
-	private Boolean isAutoClose;
+    private Boolean isAutoClose;
 
-	private Boolean isDelay;
+    private Boolean isDelay;
 
-	private Long delayTime;
+    private Long delayTime;
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		MqConfig mqConfig = (MqConfig) o;
-		return Objects.equals(title, mqConfig.title) && Objects.equals(changeName, mqConfig.changeName)
-				&& Objects.equals(queueName, mqConfig.queueName) && Objects.equals(routingKey, mqConfig.routingKey)
-				&& Objects.equals(durable, mqConfig.durable) && exchangeType == mqConfig.exchangeType
-				&& Objects.equals(ttl, mqConfig.ttl) && Objects.equals(max, mqConfig.max)
-				&& Objects.equals(deadConfig, mqConfig.deadConfig);
-	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(title, changeName, queueName, routingKey, durable, exchangeType, ttl, max, deadConfig);
-	}
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
+@Builder(builderMethodName = "of")
+public  static class DeadConfig {
+
+    private String changeName;
+
+    private String queueName;
+
+    private String routingKey;
+
+}
 
 }

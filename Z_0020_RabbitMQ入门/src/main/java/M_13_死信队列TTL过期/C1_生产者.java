@@ -9,7 +9,6 @@ import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class C1_生产者 {
@@ -30,7 +29,7 @@ public class C1_生产者 {
          * @param body 消息体
          */
         for (int i = 0; i < 5; i++) {
-            final String 消息内容 = "work " + i  + " " + DateUtil.current();
+            final String 消息内容 = "work " + i + " " + DateUtil.current();
             信道.basicPublish(C0_常量.普通交换机名称, C0_常量.普通路由键, properties, 消息内容.getBytes(StandardCharsets.UTF_8));
             Console.log("交换机: {} 消息发送成功!", C0_常量.普通交换机名称);
         }

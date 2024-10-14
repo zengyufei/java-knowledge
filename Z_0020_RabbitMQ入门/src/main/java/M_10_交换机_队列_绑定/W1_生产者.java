@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
 public class W1_生产者 {
-   static final String simpleName = W1_生产者.class.getSimpleName();
+    static final String simpleName = W1_生产者.class.getSimpleName();
 
     public static void 生产消息发送mq(String 消息内容) throws IOException, TimeoutException {
         Channel 信道 = 创建信道();
@@ -49,7 +49,7 @@ public class W1_生产者 {
     }
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        String 消息 = "hello world "  + DateUtil.current();
+        String 消息 = "hello world " + DateUtil.current();
         生产消息发送mq(消息);
         System.exit(0);
     }

@@ -47,16 +47,16 @@
 
 上图是一个队列绑定关系图，下面给出一些哪些交换机的名称能够与队列绑定示例：
 
-| 路由键名称                 | Q1队列  | Q2队列 |
-| ------------------------ | ------ | ------ |
-| quick.orange.rabbit      | Y      | Y      |
-| lazy.orange.elephant     | Y      | Y      |
-| quick.orange.fox         | Y      | N      |
-| lazy.brown.fox           | N      | Y      |
-| lazy.pink.rabbit         | N      | Y      |
-| quick.brown.fox          | N      | N      |
-| quick.orange.male.rabbit | N      | N      |
-| lazy.orange.male.rabbit  | N      | Y      |
+| 路由键名称                    | Q1队列 | Q2队列 |
+|--------------------------|------|------|
+| quick.orange.rabbit      | Y    | Y    |
+| lazy.orange.elephant     | Y    | Y    |
+| quick.orange.fox         | Y    | N    |
+| lazy.brown.fox           | N    | Y    |
+| lazy.pink.rabbit         | N    | Y    |
+| quick.brown.fox          | N    | N    |
+| quick.orange.male.rabbit | N    | N    |
+| lazy.orange.male.rabbit  | N    | Y    |
 
 当队列使用 `#` 绑定键绑定时，无论路由键是什么，它都将接收所有信息，就像 `fanout` 类型一样。
 

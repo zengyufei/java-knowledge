@@ -6,7 +6,6 @@ import com.rabbitmq.client.Connection;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
 import java.util.concurrent.TimeoutException;
 
 public class E1_生产者 {
@@ -53,7 +52,7 @@ public class E1_生产者 {
         信道.queueDeclare(E0_常量.队列名称, false, false, false, null);
 
         for (int i = 0; i < 6; i++) {
-            String message = (char) (i+(int) 'a') + "";
+            String message = (char) (i + (int) 'a') + "";
             // 发送消息
             信道.basicPublish("", E0_常量.队列名称, null, message.getBytes(StandardCharsets.UTF_8));
 

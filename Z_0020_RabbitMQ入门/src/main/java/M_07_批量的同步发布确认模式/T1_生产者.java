@@ -22,7 +22,7 @@ public class T1_生产者 {
             // 开启发布确认
             信道.confirmSelect();
             // 批量确认大小
-            int batchSize = MESSAGE_COUNT/2;
+            int batchSize = MESSAGE_COUNT / 2;
 
             // 7.声明队列
             /**

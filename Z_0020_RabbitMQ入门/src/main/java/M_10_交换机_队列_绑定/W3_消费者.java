@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
 public class W3_消费者 {
-   static final String simpleName = W3_消费者.class.getSimpleName();
+    static final String simpleName = W3_消费者.class.getSimpleName();
 
     /**
      * 消费消息

@@ -1,7 +1,8 @@
 package M_02_工作队列模式;
 
 import cn.hutool.core.lang.Console;
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -59,11 +60,11 @@ public class P3_消费者 {
     }
 
     public static void main(String[] args) throws IOException {
-          // 接收消息
-          信道.basicConsume(P0_常量.队列名称, true, (customerTag, message) -> {
-              Console.log(P3_消费者.class.getSimpleName()+"接收到消息: " + new String(message.getBody(), StandardCharsets.UTF_8));
-          }, (customerTag) -> {
-              Console.log("消息消费被中断,取消消费消息");
-          });
+        // 接收消息
+        信道.basicConsume(P0_常量.队列名称, true, (customerTag, message) -> {
+            Console.log(P3_消费者.class.getSimpleName() + "接收到消息: " + new String(message.getBody(), StandardCharsets.UTF_8));
+        }, (customerTag) -> {
+            Console.log("消息消费被中断,取消消费消息");
+        });
     }
 }

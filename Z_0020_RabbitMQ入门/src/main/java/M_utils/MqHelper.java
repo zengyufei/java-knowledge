@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
@@ -61,13 +62,13 @@ public class MqHelper {
             String routingKey = mqConfig.getRoutingKey();
             Boolean durable = mqConfig.getDurable();
             Boolean isDelay = mqConfig.getIsDelay();
-            ExchangeType exchangeType = mqConfig.getExchangeType();
+            BuiltinExchangeType exchangeType = mqConfig.getExchangeType();
             Long delayTime = mqConfig.getDelayTime();
             Boolean isAutoClose = mqConfig.getIsAutoClose();
-            final DeadConfig deadConfig = mqConfig.getDeadConfig();
+            final MqConfig.DeadConfig deadConfig = mqConfig.getDeadConfig();
 
             if (exchangeType == null) {
-                exchangeType = ExchangeType.direct;
+                exchangeType = BuiltinExchangeType.DIRECT;
             }
             if (durable == null) {
                 durable = true;
@@ -107,7 +108,16 @@ public class MqHelper {
                     .build();
         });
 
-        sendMsg(newConfig, msg, null, sendFunc);
+        try {
+            sendMsg(newConfig, msg, null, sendFunc);
+        } catch (Exception e) {
+            if ((e instanceof AlreadyClosedException)||e instanceof IOException) {
+                reConnect(mqConfig);
+            }
+            else {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**
@@ -169,16 +179,16 @@ public class MqHelper {
      */
     public static void consumeMsg(MqConfig mqConfig, BiFunction<Channel, String, ConsumeAction> successMessage)
             throws Exception {
-        ExchangeType exchangeType = mqConfig.getExchangeType();
+        BuiltinExchangeType exchangeType = mqConfig.getExchangeType();
         Boolean durable = mqConfig.getDurable();
         String routingKey = mqConfig.getRoutingKey();
         Boolean isAutoClose = mqConfig.getIsAutoClose();
         final String changeName = mqConfig.getChangeName();
         final String queueName = mqConfig.getQueueName();
-        final DeadConfig deadConfig = mqConfig.getDeadConfig();
+        final MqConfig.DeadConfig deadConfig = mqConfig.getDeadConfig();
 
         if (exchangeType == null) {
-            exchangeType = ExchangeType.direct;
+            exchangeType = BuiltinExchangeType.DIRECT;
         }
         if (durable == null) {
             durable = true;
@@ -203,17 +213,50 @@ public class MqHelper {
                 .deadConfig(deadConfig)
                 .build();
 
-        handler(successMessage, queueName, newConfig);
+        final Channel consumeChannel = getConsumeChannel(newConfig);
+        handler(consumeChannel, newConfig, successMessage, queueName);
     }
 
-    private static void handler(BiFunction<Channel, String, ConsumeAction> successMessage, String queueName, MqConfig newConfig) throws Exception {
-//        final Channel consumeChannel = getConsumeChannel(newConfig);
-        newConfig.setType("1");
-        final MqChannelFactory mqChannelFactory = getMqChannelFactory(newConfig);
-//        final Connection connection = mqChannelFactory.getConnection();
-        final Channel consumeChannel = mqChannelFactory.createChannel();
+    private static void handler(Channel consumeChannel, MqConfig newConfig, BiFunction<Channel, String, ConsumeAction> successMessage, String queueName) throws Exception {
+
         // 建立消费者
         Consumer consumer = new DefaultConsumer(consumeChannel) {
+
+            @Override
+            public void handleShutdownSignal(String consumerTag, ShutdownSignalException sig) {
+                while (true) {
+                    try {
+                        final Channel channel = resetChannel(newConfig);
+                        handler(channel, newConfig, successMessage, queueName);
+                        break;
+                    } catch (Exception e) {
+                        log.warn(ExceptionUtil.stacktraceToString(e));
+                    }
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
+            @Override
+            public void handleCancel(String consumerTag) throws IOException {
+                while (true) {
+                    try {
+                        final Channel channel = resetChannel(newConfig);
+                        handler(channel, newConfig, successMessage, queueName);
+                        break;
+                    } catch (Exception e) {
+                        log.warn(ExceptionUtil.stacktraceToString(e));
+                    }
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
 
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
@@ -325,16 +368,16 @@ public class MqHelper {
      * @throws TimeoutException 超时异常
      */
     public static int getMessageCount(MqConfig mqConfig) throws Exception {
-        ExchangeType exchangeType = mqConfig.getExchangeType();
+        BuiltinExchangeType exchangeType = mqConfig.getExchangeType();
         Boolean durable = mqConfig.getDurable();
         String routingKey = mqConfig.getRoutingKey();
         Boolean isAutoClose = mqConfig.getIsAutoClose();
         final String changeName = mqConfig.getChangeName();
         final String queueName = mqConfig.getQueueName();
-        final DeadConfig deadConfig = mqConfig.getDeadConfig();
+        final MqConfig.DeadConfig deadConfig = mqConfig.getDeadConfig();
 
         if (exchangeType == null) {
-            exchangeType = ExchangeType.direct;
+            exchangeType = BuiltinExchangeType.DIRECT;
         }
         if (durable == null) {
             durable = true;
@@ -365,13 +408,22 @@ public class MqHelper {
         return msgCount;
     }
 
-    public static void 重连(MqConfig mqConfig) {
+    public static void reConnect(MqConfig mqConfig) {
         while (true) {
             try {
                 getMqChannelFactory(mqConfig).reConnect();
                 break;
             } catch (Exception e) {
-                log.warn(ExceptionUtil.stacktraceToString(e));
+                log.warn(e.getMessage());
+            }
+        }
+    }
+    public static Channel resetChannel(MqConfig mqConfig) {
+        while (true) {
+            try {
+                return getMqChannelFactory(mqConfig).resetChannel();
+            } catch (Exception e) {
+                log.warn(e.getMessage());
             }
         }
     }

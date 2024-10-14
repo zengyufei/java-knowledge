@@ -51,7 +51,6 @@ public class P2_消费者 {
     }
 
 
-
     public static void 关闭() {
         // 9.关闭信道
         if (信道 != null && 信道.isOpen()) {

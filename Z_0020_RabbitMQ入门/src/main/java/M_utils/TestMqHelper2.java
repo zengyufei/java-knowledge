@@ -3,8 +3,6 @@ package M_utils;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -52,6 +50,16 @@ public class TestMqHelper2 {
             }
         });
 
+        ThreadUtil.execute(() -> {
+            try {
+                System.out.println("运行 死信 消费");
+                consumerDead();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
         System.in.read();
     }
 
@@ -68,7 +76,7 @@ public class TestMqHelper2 {
                     .title("消费者")
                     .changeName("consumer")
                     .queueName("consumer_queue")
-                    .deadConfig(DeadConfig.of().changeName("consumer_dead").queueName("consumer_dead_queue").build())
+                    .deadConfig(MqConfig.DeadConfig.of().changeName("consumer_dead").queueName("consumer_dead_queue").build())
                     .build();
             final String now = DateUtil.now();
             log.trace("consumer while:  " + now);

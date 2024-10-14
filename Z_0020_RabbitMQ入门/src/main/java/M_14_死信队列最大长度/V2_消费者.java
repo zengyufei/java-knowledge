@@ -20,6 +20,10 @@ public class V2_消费者 {
     public static void 监听队列接收mq消息() throws IOException, TimeoutException {
         Channel 信道 = 创建信道();
 
+        // prefetchSize 和global这两项，实际过程中几乎不使用
+        // prefetchSize：可接收消息的大小的
+        // prefetchCount：处理消息最大的数量
+        // global：是不是针对整个Connection的，因为一个Connection可以有多个Channel，如果是false则说明只是针对于这个Channel的
         信道.basicQos(1);
 
         // 声明普通交换机、死信交换机
