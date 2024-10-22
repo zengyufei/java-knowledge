@@ -1,0 +1,8 @@
+server:
+  port: 8081
+
+bean-replace:
+  enable: true
+  replace-beans:
+    - replaceBeanName: thirdpartyDao
+      replaceBeanClassName: com.zyf.thirdparty.dao.CustomDao
