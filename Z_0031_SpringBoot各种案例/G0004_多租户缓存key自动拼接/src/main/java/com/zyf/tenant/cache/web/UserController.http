@@ -1,0 +1,10 @@
+### GET request with a header
+GET http://localhost:8088/user/selectList
+TENANT_ID: 2
+
+
+Accept: application/json
+
+### GET request with a header
+GET http://localhost:8088/user/getOne?id=4
+TENANT_ID: 2

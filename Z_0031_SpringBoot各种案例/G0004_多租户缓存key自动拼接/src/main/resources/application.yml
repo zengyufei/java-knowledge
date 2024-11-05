@@ -1,0 +1,27 @@
+server:
+  port: 8088
+
+tenant:
+  enable: true
+  white-urls:
+    - /common/*
+  white-key-prefixs:
+    - zyf-auth
+  column: TENANT_ID
+  tables:
+    - SYS_TENANT
+
+spring:
+  data:
+    redis:
+      host: 10.0.0.4
+      port: 6379
+      #password: redis
+      database: 0
+      timeout: 10s
+      # 是否允许缓存空数据，当查询到的结果为空时缓存空数据到redis中
+      cache-null-values: true
+      # 是否拼接KEY前缀
+      use-key-prefix: true
+      # 是否开启缓存统计
+      enable-statistics: false
