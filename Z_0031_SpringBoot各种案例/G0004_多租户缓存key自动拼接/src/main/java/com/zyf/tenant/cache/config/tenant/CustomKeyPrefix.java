@@ -1,4 +1,4 @@
-package com.zyf.tenant.cache.config;
+package com.zyf.tenant.cache.config.tenant;
 
 import org.springframework.data.redis.cache.CacheKeyPrefix;
 import org.springframework.util.Assert;

@@ -1,5 +1,7 @@
-package com.zyf.tenant.cache.config;
+package com.zyf.tenant.cache.config.cache;
 
+import com.zyf.tenant.cache.config.tenant.CustomKeyPrefix;
+import com.zyf.tenant.cache.config.tenant.TenantConfigProperties;
 import com.zyf.tenant.cache.tenant.TenantContextHolder;
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.ObjectProvider;

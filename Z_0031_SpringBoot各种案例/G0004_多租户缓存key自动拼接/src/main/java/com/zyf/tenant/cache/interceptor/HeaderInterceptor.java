@@ -1,11 +1,10 @@
 package com.zyf.tenant.cache.interceptor;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zyf.tenant.cache.config.TenantConfigProperties;
+import com.zyf.tenant.cache.config.tenant.TenantConfigProperties;
 import com.zyf.tenant.cache.constant.FeignConstants;
 import com.zyf.tenant.cache.constant.SecurityConstants;
 import com.zyf.tenant.cache.entity.LoginUser;
@@ -17,13 +16,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
 
 /**

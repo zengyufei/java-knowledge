@@ -1,10 +1,8 @@
 package com.zyf.tenant.cache.filter;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zyf.tenant.cache.config.TenantConfigProperties;
+import com.zyf.tenant.cache.config.tenant.TenantConfigProperties;
 import com.zyf.tenant.cache.constant.FeignConstants;
 import com.zyf.tenant.cache.constant.RedisConstants;
 import com.zyf.tenant.cache.tenant.TenantContextHolder;
@@ -21,13 +19,10 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.List;
 
 @Slf4j
 @Component

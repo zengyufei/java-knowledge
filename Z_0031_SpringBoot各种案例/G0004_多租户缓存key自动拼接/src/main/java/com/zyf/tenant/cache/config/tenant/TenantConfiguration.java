@@ -1,4 +1,4 @@
-package com.zyf.tenant.cache.config;
+package com.zyf.tenant.cache.config.tenant;
 
 import com.zyf.tenant.cache.interceptor.RestTemplateRequestInterceptor;
 import org.springframework.context.annotation.Bean;

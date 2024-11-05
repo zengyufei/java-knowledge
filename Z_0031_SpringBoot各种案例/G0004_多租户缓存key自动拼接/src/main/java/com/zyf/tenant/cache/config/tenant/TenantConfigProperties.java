@@ -1,4 +1,4 @@
-package com.zyf.tenant.cache.config;
+package com.zyf.tenant.cache.config.tenant;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

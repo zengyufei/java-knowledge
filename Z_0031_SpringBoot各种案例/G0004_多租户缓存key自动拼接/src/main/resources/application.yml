@@ -5,6 +5,7 @@ tenant:
   enable: true
   white-urls:
     - /common/*
+    - /commonNot/*
   white-key-prefixs:
     - zyf-auth
   column: TENANT_ID

@@ -1,9 +1,8 @@
-package com.zyf.tenant.cache.config;
+package com.zyf.tenant.cache.config.cache;
 
 import cn.hutool.core.util.StrUtil;
 import com.zyf.tenant.cache.constant.RedisConstants;
 import com.zyf.tenant.cache.tenant.TenantContextHolder;
-import com.zyf.tenant.cache.utils.RedisKeyResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -50,7 +49,8 @@ public class TenantStringRedisSerializer implements RedisSerializer<String> {
             return null;
         }
 
-        if (StrUtil.startWithAnyIgnoreCase(string, RedisConstants.GLOBALLY)
+        if (TenantContextHolder.getTenantNotAppend()
+                || StrUtil.startWithAnyIgnoreCase(string, RedisConstants.GLOBALLY)
                 || StrUtil.startWithAnyIgnoreCase(string, TenantContextHolder.getWhiteKeyPrefixs())) {
             echoLog(string);
             return string.getBytes(charset);

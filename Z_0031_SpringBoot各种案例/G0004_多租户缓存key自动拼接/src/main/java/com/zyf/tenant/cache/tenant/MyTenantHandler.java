@@ -2,7 +2,7 @@
 //
 //import cn.hutool.core.util.StrUtil;
 //import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
-//import com.zyf.tenant.cache.config.TenantConfigProperties;
+//import com.zyf.tenant.cache.config.tenant.TenantConfigProperties;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
 //import net.sf.jsqlparser.expression.Expression;

@@ -1,4 +1,4 @@
-package com.zyf.tenant.cache.config;
+package com.zyf.tenant.cache.config.cache;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.cache.CacheManagerCustomizer;

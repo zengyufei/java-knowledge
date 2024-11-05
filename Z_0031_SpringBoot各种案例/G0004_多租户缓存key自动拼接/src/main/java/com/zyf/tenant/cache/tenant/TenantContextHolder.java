@@ -3,6 +3,8 @@ package com.zyf.tenant.cache.tenant;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.ttl.TransmittableThreadLocal;
+import com.alibaba.ttl.TtlCallable;
+import com.alibaba.ttl.TtlRunnable;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.AntPathMatcher;
 
@@ -20,6 +22,8 @@ public class TenantContextHolder {
     private final ThreadLocal<String> THREAD_LOCAL_TENANT = new TransmittableThreadLocal<>();
 
     private final ThreadLocal<Boolean> THREAD_LOCAL_TENANT_SKIP_FLAG = new TransmittableThreadLocal<>();
+
+    private final ThreadLocal<Boolean> THREAD_LOCAL_TENANT_CACHE_NOT_APPEND = new TransmittableThreadLocal<>();
 
     /**
      * TTL 设置租户ID<br/>
@@ -45,7 +49,7 @@ public class TenantContextHolder {
     public void skipTenant(Runnable runnable) {
         THREAD_LOCAL_TENANT_SKIP_FLAG.set(Boolean.TRUE);
         try {
-            runnable.run();
+            TtlRunnable.get(runnable).run();
         } finally {
             THREAD_LOCAL_TENANT_SKIP_FLAG.remove();
         }
@@ -57,11 +61,37 @@ public class TenantContextHolder {
     public <T> T skipTenant(Callable<T> callable) {
         THREAD_LOCAL_TENANT_SKIP_FLAG.set(Boolean.TRUE);
         try {
-            return callable.call();
+            return TtlCallable.get(callable).call();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             THREAD_LOCAL_TENANT_SKIP_FLAG.remove();
+        }
+    }
+
+    /**
+     * 设置是否过滤的标识
+     */
+    public void notAppendTenantKey(Runnable runnable) {
+        THREAD_LOCAL_TENANT_CACHE_NOT_APPEND.set(Boolean.TRUE);
+        try {
+            TtlRunnable.get(runnable).run();
+        } finally {
+            THREAD_LOCAL_TENANT_CACHE_NOT_APPEND.remove();
+        }
+    }
+
+    /**
+     * 设置是否过滤的标识
+     */
+    public <T> T notAppendTenantKey(Callable<T> callable) {
+        THREAD_LOCAL_TENANT_CACHE_NOT_APPEND.set(Boolean.TRUE);
+        try {
+            return TtlCallable.get(callable).call();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            THREAD_LOCAL_TENANT_CACHE_NOT_APPEND.remove();
         }
     }
 
@@ -89,25 +119,29 @@ public class TenantContextHolder {
     public Boolean getTenantSkip() {
         return THREAD_LOCAL_TENANT_SKIP_FLAG.get() != null && THREAD_LOCAL_TENANT_SKIP_FLAG.get();
     }
+    public Boolean getTenantNotAppend() {
+        return THREAD_LOCAL_TENANT_CACHE_NOT_APPEND.get() != null && THREAD_LOCAL_TENANT_CACHE_NOT_APPEND.get();
+    }
 
     public void clear() {
         THREAD_LOCAL_TENANT.remove();
         THREAD_LOCAL_TENANT_SKIP_FLAG.remove();
+        THREAD_LOCAL_TENANT_CACHE_NOT_APPEND.remove();
     }
 
-    public static String[] getWhiteKeyPrefixs() {
+    public  String[] getWhiteKeyPrefixs() {
         return whiteKeyPrefixs;
     }
 
-    public static void setWhiteKeyPrefixs(String[] whiteKeyPrefixs) {
+    public  void setWhiteKeyPrefixs(String[] whiteKeyPrefixs) {
         TenantContextHolder.whiteKeyPrefixs = whiteKeyPrefixs;
     }
 
-    public static String[] getWhiteUrls() {
+    public  String[] getWhiteUrls() {
         return whiteUrls;
     }
 
-    public static void setWhiteUrls(String[] whiteUrls) {
+    public  void setWhiteUrls(String[] whiteUrls) {
         TenantContextHolder.whiteUrls = whiteUrls;
     }
 
@@ -118,7 +152,7 @@ public class TenantContextHolder {
      * @param str 指定字符串
      * @return 是否匹配
      */
-    public static boolean matches(String str) {
+    public  boolean matches(String str) {
 
         if (StrUtil.isBlank(str) || ArrayUtil.isEmpty(TenantContextHolder.getWhiteUrls())) {
             return false;
@@ -131,8 +165,9 @@ public class TenantContextHolder {
         return false;
     }
 
-    private static boolean isMatch(String pattern, String url) {
+    private  boolean isMatch(String pattern, String url) {
         AntPathMatcher matcher = new AntPathMatcher();
         return matcher.match(pattern, url);
     }
+
 }

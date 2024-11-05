@@ -1,0 +1,6 @@
+### GET request with a header
+GET http://localhost:8088/commonNot/selectList
+Accept: application/json
+
+### GET request with a header
+GET http://localhost:8088/commonNot/getOne?id=4
