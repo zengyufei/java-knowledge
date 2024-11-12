@@ -17,6 +17,7 @@
         <module>Z_0002_多线程</module>
         <module>Z_0019_Netty入门IO通讯</module>
         <module>Z_0020_RabbitMQ入门</module>
+        <module>Z_0021_简单手写RPC</module>
         <!--        <module>Z_0050_SpringCloud入门</module>-->
     </modules>
 
