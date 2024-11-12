@@ -21,8 +21,6 @@ public class UserController {
 
     @Autowired
     private UserService service;
-    @Autowired
-    private CacheManager cacheManager;
 
     @GetMapping("selectList")
     public Object selectList() {

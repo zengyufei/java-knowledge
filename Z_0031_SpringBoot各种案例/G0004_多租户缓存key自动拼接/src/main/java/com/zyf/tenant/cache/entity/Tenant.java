@@ -6,21 +6,16 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 
-/**
- * UserEntity
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity implements Serializable {
+public class Tenant implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
-    private String name;
-    private List<Tenant> tenants;
+    private String tenantId;
+    private String tenantName;
 
 }

@@ -2,7 +2,7 @@ server:
   port: 8088
 
 tenant:
-  enable: true
+  enable: false
   white-urls:
     - /common/*
     - /commonNot/*

@@ -19,6 +19,10 @@ import java.util.Map;
 
 /**
  * redis cache 扩展cache name自动化配置
+ *
+ * @author zengyufei
+ * @author lengleng
+ * <p>
  * cachename = xx#ttl
  */
 @Slf4j
@@ -28,14 +32,11 @@ public class RedisAutoCacheManager extends RedisCacheManager {
 
     private static final int CACHE_LENGTH = 2;
 
-    private final TenantConfigProperties tenantConfigProperties;
 
-    public RedisAutoCacheManager(TenantConfigProperties tenantConfigProperties,
-                                 RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration,
+    public RedisAutoCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration,
                                  boolean allowInFlightCacheCreation,
                                  Map<String, RedisCacheConfiguration> initialCacheConfigurations) {
         super(cacheWriter, defaultCacheConfiguration, allowInFlightCacheCreation, initialCacheConfigurations);
-        this.tenantConfigProperties = tenantConfigProperties;
     }
 
 
@@ -59,13 +60,10 @@ public class RedisAutoCacheManager extends RedisCacheManager {
 
     /**
      * 从上下文中获取租户ID，重写@Cacheable value 值
-     *
-     * @param name
-     * @return
      */
     @Override
     public Cache getCache(String name) {
-        if (name.startsWith(RedisConstants.GLOBALLY) || !tenantConfigProperties.isEnable()) {
+        if (name.startsWith(RedisConstants.GLOBALLY)) {
             return super.getCache(name);
         }
         final String tenantId = TenantContextHolder.getTenantId();

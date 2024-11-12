@@ -3,10 +3,12 @@ package com.zyf.tenant.cache.mapper;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.zyf.tenant.cache.entity.Tenant;
 import com.zyf.tenant.cache.entity.UserEntity;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,10 +21,15 @@ public class UserMapper {
 
     @PostConstruct
     public void init() {
-        users.add(new UserEntity(1, "用户" + 1));
-        users.add(new UserEntity(2, "用户" + 2));
-        users.add(new UserEntity(3, "用户" + 3));
-        users.add(new UserEntity(4, "用户" + 4));
+        final ArrayList<Tenant> tenants = new ArrayList<>();
+          final Tenant tenant = new Tenant();
+        tenant.setTenantId("1");
+        tenant.setTenantName("test");
+        tenants.add(tenant);
+        users.add(new UserEntity(1, "用户" + 1, tenants));
+        users.add(new UserEntity(2, "用户" + 2, tenants));
+        users.add(new UserEntity(3, "用户" + 3, tenants));
+        users.add(new UserEntity(4, "用户" + 4, tenants));
     }
 
     public List<UserEntity> list() {

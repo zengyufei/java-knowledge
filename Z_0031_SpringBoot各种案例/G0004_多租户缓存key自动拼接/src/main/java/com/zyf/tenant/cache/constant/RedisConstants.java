@@ -10,7 +10,7 @@ public class RedisConstants {
     /**
      * 默认租户id
      */
-    public static final long TENANT_ID_1 = 1L;
+    public static final String TENANT_ID_1 = "1";
 
     /**
      * 全局缓存，在缓存名称上加上该前缀表示该缓存不区分租户，比如:

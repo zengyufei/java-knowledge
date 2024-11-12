@@ -69,6 +69,6 @@ public class LoginUser implements Serializable
     /**
      * 租户列表
      */
-    private List<JSONObject> tenants;
+    private List<Tenant> tenants;
 
 }

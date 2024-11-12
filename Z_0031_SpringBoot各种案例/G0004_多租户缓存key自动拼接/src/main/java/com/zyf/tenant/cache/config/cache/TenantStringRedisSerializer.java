@@ -13,7 +13,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 自定义序列化，用于保存租户号，隔离数据
+ * @author cherf
+ * @Description 自定义序列化，用于保存租户号，隔离数据
+ * @Date 2022/9/5
  */
 @Slf4j
 public class TenantStringRedisSerializer implements RedisSerializer<String> {

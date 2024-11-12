@@ -7,6 +7,7 @@ import cn.hutool.json.JSONObject;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.zyf.tenant.cache.constant.SecurityConstants;
 import com.zyf.tenant.cache.entity.LoginUser;
+import com.zyf.tenant.cache.entity.Tenant;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -85,15 +86,15 @@ public class SecurityContextHolder {
 
     public static LoginUser getLoginUser(String token) {
         final LoginUser loginUser = new LoginUser();
-        final ArrayList<JSONObject> tenants = new ArrayList<>();
+        final ArrayList<Tenant> tenants = new ArrayList<>();
         {
-            final JSONObject e = new JSONObject();
-            e.set("tenantId", "1");
+            final Tenant e = new Tenant();
+            e.setTenantId("1");
             tenants.add(e);
         }
         {
-            final JSONObject e = new JSONObject();
-            e.set("tenantId", "2");
+            final Tenant e = new Tenant();
+            e.setTenantId("2");
             tenants.add(e);
         }
         loginUser.setTenants(tenants);
