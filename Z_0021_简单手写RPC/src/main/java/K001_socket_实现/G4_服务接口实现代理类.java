@@ -1,15 +1,15 @@
-package K001_socket实现;
+package K001_socket_实现;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class G4_服务接口实现代理类 implements K001_socket实现.G2_服务接口 {
+public class G4_服务接口实现代理类 implements K001_socket_实现.G2_服务接口 {
 
     @Override
     public String 字符串转换大写(String 参数) {
-        try (Socket socket = new Socket(K001_socket实现.G1_常量.地址, K001_socket实现.G1_常量.端口)) {
+        try (Socket socket = new Socket(K001_socket_实现.G1_常量.地址, K001_socket_实现.G1_常量.端口)) {
 
             // 将请求序列化
             ObjectOutputStream 本地内存输出 = new ObjectOutputStream(socket.getOutputStream());

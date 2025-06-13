@@ -1,4 +1,4 @@
-package K001_socket实现;
+package K001_socket_实现;
 
 import cn.hutool.core.lang.Console;
 
@@ -10,9 +10,9 @@ import java.net.Socket;
 
 public class G5_服务端 {
     public static void main(String[] args) throws IOException {
-        K001_socket实现.G2_服务接口 服务接口 = new K001_socket实现.G3_服务接口实现();
-        try (ServerSocket socket服务端 = new ServerSocket(K001_socket实现.G1_常量.端口)) {
-            Console.log("Server 端启动：{}:{}", K001_socket实现.G1_常量.地址, K001_socket实现.G1_常量.端口);
+        K001_socket_实现.G2_服务接口 服务接口 = new K001_socket_实现.G3_服务接口实现();
+        try (ServerSocket socket服务端 = new ServerSocket(K001_socket_实现.G1_常量.端口)) {
+            Console.log("Server 端启动：{}:{}", K001_socket_实现.G1_常量.地址, K001_socket_实现.G1_常量.端口);
             while (true) {
                 try (Socket 监听到socket = socket服务端.accept()) {
                     // 将请求反序列化
