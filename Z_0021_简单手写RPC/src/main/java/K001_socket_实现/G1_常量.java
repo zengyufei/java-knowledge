@@ -1,4 +1,4 @@
-package K001_websocket实现;
+package K001_socket实现;
 
 public interface G1_常量 {
 

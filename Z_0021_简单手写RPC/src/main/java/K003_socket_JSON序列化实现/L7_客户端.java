@@ -1,12 +1,12 @@
-package K001_websocket实现;
+package K003_socket_JSON序列化实现;
 
 import cn.hutool.core.lang.Console;
 
 import java.io.IOException;
 
-public class G7_客户端 {
+public class L7_客户端 {
     public static void main(String[] args) throws IOException {
-        G3_服务接口 服务接口 = new G5_服务接口实现代理类();
+        L3_服务接口 服务接口 = new L5_服务接口实现代理类();
         {
             int 计算结果 = 服务接口.计算加法(1, 2);
             Console.log("计算结果: {}", 计算结果);

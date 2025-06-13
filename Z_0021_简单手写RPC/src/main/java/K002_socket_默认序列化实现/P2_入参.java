@@ -1,4 +1,4 @@
-package K001_websocket实现;
+package K002_socket_默认序列化实现;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class G2_入参 implements Serializable {
+public class P2_入参 implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 6420751004355300996L;
